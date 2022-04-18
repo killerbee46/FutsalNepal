@@ -18,7 +18,6 @@
 <tr>
     <th>Name</th>
     <th>Owner Name</th>
-    <th>Email</th>
     <th>Contact</th>
     <th>Address</th>
     <th>Embed Map</th>
@@ -26,9 +25,8 @@
 </tr>
 @foreach ($futsals as $futsal )
     <tr>
-        <td><a href="/futsal/{{$futsal->id}}">{{$futsal->name}}</a></td>
+        <td><a href="futsal/{{$futsal->id}}">{{$futsal->futsal_name}}</a></td>
         <td>{{$futsal->owner_name}}</td>
-        <td>{{$futsal->email}}</td>
         <th>{{$futsal->contact}}</th>
     <td>{{$futsal->area}}, {{$futsal->city}}</td>
     <td>{{$futsal->map}}</td>
@@ -45,6 +43,6 @@
 @endforeach
 
 </table>
-<a href="/futsal/create" class="btn btn-success" style="margin-left:5%;margin-top:5px;" >Add New Futsal</a>
+<a href="futsal/create" class="btn btn-success" style="margin-left:5%;margin-top:5px;" >Add New Futsal</a>
 </body>
 </html>

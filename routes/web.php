@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 Use App\Http\Controllers\UserController;
 Use App\Http\Controllers\FutsalController;
+Use App\Http\Controllers\FrontendController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -17,13 +18,9 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/',[FrontendController::class, 'home']);
+Route::get('/futsals',[FrontendController::class, 'futsals']);
 
 require __DIR__.'/auth.php';
 
@@ -31,7 +28,7 @@ require __DIR__.'/auth.php';
 
  Route::group(['prefix'=>'admin','middleware'=>'admin'],function (){
         Route::get('/',[UserController::class, 'index']);
-        
+
         Route::group(['prefix'=>'users','middleware'=>'auth'],function (){
 
     	    Route::get('/',[UserController::class, 'index']);
@@ -47,10 +44,11 @@ require __DIR__.'/auth.php';
         Route::group(['prefix'=>'futsal','middleware'=>'auth'],function (){
 
     	    Route::get('/',[FutsalController::class, 'index']);
+            Route::get('/{id}',[FutsalController::class, 'show']);
+    	    Route::get('/create',[FutsalController::class, 'create']);
+            Route::post('/add-futsal',[FutsalController::class, 'store']);
     	    Route::post('/updatefutsalinfo/{id}',[FutsalController::class, 'UpdateFutsal']);
-    	    Route::get('/add-futsal',[FutsalController::class, 'addFutsal']);
             Route::post('/search-futsal',[FutsalController::class, 'searchFutsalForAdmin']);
-            Route::post('/add-futsal',[FutsalController::class, 'addNewFutsal']);
             Route::get('/edit-futsal/{id}',[FutsalController::class, 'editFutsal']);
             Route::post('/edit-futsal/{id}',[FutsalController::class, 'updateFutsal']);
             Route::post('/delete-futsal/{id}',[FutsalController::class, 'deleteFutsal']);

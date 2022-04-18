@@ -27,6 +27,10 @@ Use a more readable tab size (opinionated).
      tab-size: 4;
 }
 
+
+/* custom css */
+
+
 /**
 1. Correct the line height in all browsers.
 2. Prevent adjustments of font size after orientation changes in iOS.
@@ -184466,4 +184470,6 @@ select {
             animation: bounce 1s infinite;
   }
 }
+
+
 

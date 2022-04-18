@@ -32,10 +32,10 @@ class FutsalController extends Controller
     {
         //CREATE
         return view('admin.futsals.create');
-        
+
     }
 
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -49,18 +49,18 @@ class FutsalController extends Controller
         $request->validate([
             'name' => 'required',
             'owner_name' => 'required',
-            'photo'=>'required',
+            'image'=>'required',
             'contact'=>'required',
             'city'=>'required',
             'area'=>'required',
             'map'=>'required'
         ]);
 
-        if ($file = $request->file('photo')) {
+        if ($file = $request->file('image')) {
         $request->validate([
-            'photo' =>'mimes:jpg,jpeg,png,bmp'
+            'image' =>'mimes:jpg,jpeg,png,bmp'
         ]);
-        $image = $request->file('photo');
+        $image = $request->file('image');
         $imgExt = $image->getClientOriginalExtension();
         $fullname = time().".".$imgExt;
         $result = $image->storeAs('images/futsals',$fullname);
@@ -70,12 +70,12 @@ class FutsalController extends Controller
             $fullname = 'image.png';
         }
 
-        
+
 
         $futsals = new Futsal();
-        $futsals->name = $request->name;
+        $futsals->futsal_name = $request->name;
         $futsals->owner_name = $request->owner_name;
-        $futsals->photo = $fullname;
+        $futsals->image = $fullname;
         $futsals->contact = $request->contact;
         $futsals->city = $request->city;
         $futsals->area = $request->area;
@@ -83,9 +83,9 @@ class FutsalController extends Controller
         $futsals->save();
 
 
-        if($futsals){
+        if($futsals->save()){
             //Redirect with Flash message
-            return redirect('/futsal')->with('status', 'Futsal added Successfully!');
+            return redirect('/admin/futsal')->with('status', 'Futsal added Successfully!');
         }
         else{
             return redirect('/futsal/create')->with('status', 'There was an error!');
@@ -166,6 +166,6 @@ class FutsalController extends Controller
         }
         else return redirect('/futsal')->with('status', 'There was an error');
 
-        
+
     }
 }

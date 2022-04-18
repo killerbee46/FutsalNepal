@@ -18,7 +18,7 @@
     @endif
 
     <div class="container" width='50%'>
-        <form action="/futsal" method="POST" enctype='multipart/form-data'>
+        <form action="/admin/futsal/add-futsal" method="POST" enctype='multipart/form-data'>
             <h3>Add New Futsal</h3>
             <hr width='50%'>
             @csrf
@@ -57,13 +57,12 @@
                         </select>
                     </div>
                 </div>
-
                 <h5>Map</h5>
                 <input type="text" name="map" style="width: 500px;height: auto;">
                 <div class="custom-file">
                     <h5>Photo</h5>
                     <input type="file" class="custom-file-input" id="inputGroupFile04"
-                        aria-describedby="inputGroupFileAddon04" name="photo">
+                        aria-describedby="inputGroupFileAddon04" name="image">
                 </div>
             </div>
             <br>

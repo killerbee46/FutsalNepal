@@ -17,6 +17,8 @@ class CreateFutsalTable extends Migration
             $table->increments('id');
             $table->string('futsal_name');
             $table->string('owner_name');
+            $table->string('image');
+            $table->string('date');
             $table->string('contact');
             $table->string('email');
             $table->string('city');

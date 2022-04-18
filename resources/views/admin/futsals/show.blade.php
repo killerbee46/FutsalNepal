@@ -7,8 +7,8 @@
     <title>Show View</title>
 </head>
 <body style="width: 90%;">
-  <h1>{{$futsals->name}}</h1>
-  <div><img width='700px' height='500px' src="{{asset('/images/futsals/'.$futsals->photo)}}" alt=""></div>
-  <h3>{{$futsals->area}},{{$futsals->city}}</h3>  
+  <h1>{{$futsals->futsal_name}}</h1>
+  <div><img width='700px' height='500px' src="{{asset('/images/futsals/'.$futsals->image)}}" alt=""></div>
+  <h3>{{$futsals->area}},{{$futsals->city}}</h3>
 </body>
 </html>
