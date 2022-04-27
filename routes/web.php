@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/',[FrontendController::class, 'home']);
 Route::get('/futsals',[FrontendController::class, 'futsals']);
+Route::get('/futsals/{id}',[FrontendController::class, 'futsalDetail']);
+Route::get('/futsals/{id}/book',[FrontendController::class, 'booking']);
 
 require __DIR__.'/auth.php';
 

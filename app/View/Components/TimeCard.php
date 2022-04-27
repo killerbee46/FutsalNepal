@@ -4,19 +4,16 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class FutsalCard extends Component
+class TimeCard extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-
-     public $futsal;
-    public function __construct($futsal)
+    public function __construct()
     {
-        $this->futsal = $futsal;
-        dd($futsal);
+        //
     }
 
     /**
@@ -26,6 +23,6 @@ class FutsalCard extends Component
      */
     public function render()
     {
-        return view('components.futsal-card');
+        return view('components.time-card');
     }
 }

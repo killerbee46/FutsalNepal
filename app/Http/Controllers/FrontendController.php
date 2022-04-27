@@ -4,15 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Futsal;
 
 class FrontendController extends Controller
 {
     public function home()
     {
-       return view('frontend.index');
+        $futsal = Futsal::all();
+       return view('frontend.index',compact('futsal'));
     }
     public function futsals()
     {
-       return view('frontend.futsals');
+        $futsal = Futsal::all();
+       return view('frontend.futsals',compact('futsal'));
+    }
+    public function futsalDetail()
+    {
+        return view('frontend.futsal-detail');
+    }
+    public function booking()
+    {
+        return view('frontend.booking');
     }
 }
