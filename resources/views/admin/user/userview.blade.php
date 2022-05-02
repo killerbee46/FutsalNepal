@@ -13,7 +13,7 @@
             </div>
         @endif
 
-        <form style="float: right;" method="POST" 
+        <form style="float: right;" method="POST"
           action="{{url('admin/users/search-user/')}}" >
               @csrf
                   <input class="input is-normal" type="text" placeholder="Normal input" style="width: 300px; " name="searched">
@@ -25,23 +25,25 @@
             <a href="{{url('admin/users/add-user')}}" class="button is-primary">Add User</a>
 
         </div>
-         <h2 style="color:blue">List of users</h2>
+         <h2>List of users</h2>
 
 
-         <table border="1px" class="table">
-             <tr>
-                 <th>Name</th>
-                 <th>Email</th>
-                 <th>Action</th>
+         <table class="table table-striped">
+             <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Action</th>
 
-             </tr>
+                </tr>
+             </thead>
 
              @foreach($data as $user)
                 <tr>
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
                     <td>
-                        
+
                         <form method="post" action="{{url('admin/users/delete-user/'.$user->id)}}"  >
                             <a href="{{url('admin/users/edit-user/'.$user->id)}}" class="btn btn-primary">Edit </a>
                             @csrf
@@ -49,14 +51,14 @@
                         </form>
 
                     </td>
-                   
+
                 </tr>
-                
+
              @endforeach
 
 
          </table>
-         
+
         <!--  <p>Red background </p> -->
 </div>
 {{ $data->links("pagination::bootstrap-4")}}

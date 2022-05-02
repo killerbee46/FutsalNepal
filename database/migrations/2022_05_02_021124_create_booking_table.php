@@ -17,11 +17,11 @@ class CreateBookingTable extends Migration
             $table->increments('id');
             $table->integer('booker_id')->unsigned();
             $table->integer('futsal_id')->unsigned();
-            $table->string('book_date');
-            $table->boolean('isBooked')->default(false);
+            $table->integer('time_id')->unsigned();
+            $table->boolean('isBooked')->default(0);
             $table->foreign('futsal_id')->references('id')->on('futsal');
             $table->foreign('booker_id')->references('id')->on('users');
-            $table->foreign('book_date')->references('id')->on('date');
+            $table->foreign('time_id')->references('id')->on('times');
             $table->timestamps();
         });
     }

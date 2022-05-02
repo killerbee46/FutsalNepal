@@ -57,5 +57,9 @@ require __DIR__.'/auth.php';
 
         });
 
+        Route::get('/time',function(){
+            return view('admin.time.index');
+        });
+
 
     });

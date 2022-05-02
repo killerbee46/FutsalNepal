@@ -5,7 +5,7 @@
 <div class="container">
 
     <h3 class="py-2">Select from multiple Futsals</h3>
-    @foreach ( $futsal as $item)
+    @foreach ( $futsal as $futsal)
     <div class="card shadow mb-5 bg-body rounded" style="width: 18rem;">
         <img src="{{asset('/images/futsals/'.$futsal->image)}}" class="card-img-top" alt="...">
         <div class="card-body">
