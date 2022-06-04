@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title></title>
+    <title>@yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- bluma css cdn -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">

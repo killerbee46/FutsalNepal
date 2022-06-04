@@ -46,7 +46,6 @@ require __DIR__.'/auth.php';
         Route::group(['prefix'=>'futsal','middleware'=>'auth'],function (){
 
     	    Route::get('/',[FutsalController::class, 'index']);
-            Route::get('/{id}',[FutsalController::class, 'show']);
     	    Route::get('/create',[FutsalController::class, 'create']);
             Route::post('/add-futsal',[FutsalController::class, 'store']);
     	    Route::post('/updatefutsalinfo/{id}',[FutsalController::class, 'UpdateFutsal']);

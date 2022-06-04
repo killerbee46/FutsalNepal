@@ -1,6 +1,10 @@
 @extends('admin.adminmaster')
 @section('content')
 
+@section('title') Futsal List
+
+@endsection
+
 @if (session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
