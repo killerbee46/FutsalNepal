@@ -63,7 +63,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => \App\Http\Middleware\Admin::class,
-        'futsal' => \App\Http\Middleware\Futsal::class
-
+        'futsal' => \App\Http\Middleware\Futsal::class,
+        'book-futsal' => \App\Http\Middleware\BookFutsal::class,
     ];
 }

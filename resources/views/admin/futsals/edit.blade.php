@@ -17,7 +17,7 @@
     @endif
 
     <div class="container" width='50%'>
-        <form action="/futsal" method="POST" enctype='multipart/form-data'>
+        <form action="/admin/futsal/edit/{{$futsals->id}}" method="POST" enctype='multipart/form-data'>
         <h3>Edit the Futsal Information</h3>
             <hr width='50%'>
             @csrf
@@ -34,8 +34,11 @@
             <div align='left'>
             <h5>Name</h5>
             <input type="text" name="name" style="width: 500px;height: auto;" value="{{$futsals->name}}"><br>
-            <h5>Owner Name</h5>
-            <input type="text" name="owner_name" style="width: 500px;height: auto;" value="{{$futsals->owner_name}}">
+            @error('name')
+            <div class="alert alert-danger">Please enter the name of futsal</div>
+            @enderror
+            <h5>Email</h5>
+            <input type="text" name="email" style="width: 500px;height: auto;" value="{{$futsals->email}}">
             <h5>Contact</h5>
             <input type="text" name="contact" style="width: 500px;height: auto;" value="{{$futsals->contact}}">
             <div align='center' style="display: flex;justify-content: left; width: 60%; margin:10px">

@@ -30,8 +30,6 @@
 
 </head>
 
-<body>
-
 
     <!-- <nav class="navbar is-transparent">
         <div class="navbar-brand">
@@ -82,7 +80,7 @@
             <hr>
             <ul class="nav nav-pills flex-column mb-auto menu">
                 <li class="nav-item">
-                    <a href="#" class="nav-link text-white" aria-current="page">
+                    <a href="/" class="nav-link text-white" aria-current="page">
                         <svg class="bi me-2" width="16" height="16">
                             <use xlink:href="#home"></use>
                         </svg>
@@ -90,7 +88,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link text-white">
+                    <a href="/admin/users" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16">
                             <use xlink:href="#speedometer2"></use>
                         </svg>
@@ -114,7 +112,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link text-white">
+                    <a href="/admin/{{Auth::user()->id}}/profile" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16">
                             <use xlink:href="#people-circle"></use>
                         </svg>
@@ -127,16 +125,14 @@
                 aria-expanded="false" style="color: white;">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png"
                     alt="" width="32" height="32" class="rounded-circle me-2">
-                <strong>User</strong>
+                <strong>{{Auth::user()->name}}</strong>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">New project...</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="/admin/{{Auth::user()->id}}/profile">Profile</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
+                <li><a class="dropdown-item" href="/logout">Sign out</a></li>
             </ul>
         </div>
 
@@ -150,17 +146,15 @@
                             style="position: relative;color: aliceblue;">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png"
                                 alt="" width="32" height="32" class="rounded-circle me-2">
-                            <strong>User</strong>
+                            <strong>{{Auth::user()->name}}</strong>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
                             style="position: absolute;right: 0; left: auto;">
-                            <li><a class="dropdown-item" href="#">New project...</a></li>
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="admin/{{Auth::user()->id}}/profile">Profile</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                            <li><a class="dropdown-item" href="/logout">Sign out</a></li>
                         </ul>
                     </div>
                 </div>

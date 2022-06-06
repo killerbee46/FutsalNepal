@@ -11,10 +11,10 @@ class Futsal extends Model
     protected $table = "futsal";
 
     protected $fillable =[
-        "futsal_name",
-        "owner_name",
+        "name",
+        // "owner_id",
         "image",
-        "date",
+        // "date",
         "contact",
         "email",
         "city",

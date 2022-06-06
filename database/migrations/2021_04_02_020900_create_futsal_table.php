@@ -15,8 +15,8 @@ class CreateFutsalTable extends Migration
     {
         Schema::create('futsal', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('futsal_name');
-            $table->string('owner_name');
+            $table->integer('owner_id');
+            $table->string('name');
             $table->string('image');
             $table->string('date');
             $table->string('contact');

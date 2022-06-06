@@ -16,24 +16,22 @@
             <h3>Add New Futsal</h3>
             <hr width='50%'>
             @csrf
-
-            @error('name')
-            <div class="alert alert-danger">Please enter the title</div>
-            @enderror
-            @error('owner_name')
-            <div class="alert alert-danger">Please enter the article</div>
-            @enderror
-            @error('contact')
-            <div class="alert alert-danger">Please add an image file</div>
-            @enderror
-
             <div align='left'>
                 <h5>Name</h5>
-                <input type="text" name="name" style="width: 500px;height: auto;"><br>
-                <h5>Owner Name</h5>
-                <input type="text" name="owner_name" style="width: 500px;height: auto;">
+                <input type="text" name="name" style="width: 50%;height: auto;"><br>
+                @error('name')
+                <div class="alert alert-danger" style="width: 50%;height: auto;">Please enter the futsal name</div>
+                @enderror
+                <h5>Email</h5>
+                <input type="text" name="email" style="width: 50%;height: auto;">
+                @error('email')
+            <div class="alert alert-danger" style="width: 50%;height: auto;">Please enter the email</div>
+            @enderror
                 <h5>Contact</h5>
-                <input type="text" name="contact" style="width: 500px;height: auto;">
+                <input type="text" name="contact" style="width: 50%;height: auto;">
+                @error('contact')
+            <div class="alert alert-danger"  style="width: 50%;height: auto;">Please enter the contact</div>
+            @enderror
                 <div align='center' style="display: flex;justify-content: left;width: 60%;margin: 10px;">
                     <div>
                         <h5>City</h5>
@@ -52,7 +50,7 @@
                     </div>
                 </div>
                 <h5>Map</h5>
-                <input type="text" name="map" style="width: 500px;height: auto;">
+                <input type="text" name="map" style="width: 50%;height: auto;">
                 <div class="custom-file">
                     <h5>Photo</h5>
                     <input type="file" class="custom-file-input" id="inputGroupFile04"

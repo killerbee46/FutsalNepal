@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Futsal;
+use Carbon\Carbon;
 
 class FutsalController extends Controller
 {
@@ -48,7 +49,7 @@ class FutsalController extends Controller
     //    dd($request->all());
         $request->validate([
             'name' => 'required',
-            'owner_name' => 'required',
+            'email'=> 'required',
             'image'=>'required',
             'contact'=>'required',
             'city'=>'required',
@@ -70,13 +71,13 @@ class FutsalController extends Controller
             $fullname = 'image.png';
         }
 
-
-
         $futsals = new Futsal();
-        $futsals->futsal_name = $request->name;
-        $futsals->owner_name = $request->owner_name;
+        $futsals->owner_id = $request->owner_id || 0;
+        $futsals->name= $request->name;
+        $futsals->email = $request->email;
         $futsals->image = $fullname;
         $futsals->contact = $request->contact;
+        $futsals->date = $request->date || null;
         $futsals->city = $request->city;
         $futsals->area = $request->area;
         $futsals->map = $request->map;
@@ -114,7 +115,7 @@ class FutsalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function editFutsal($id)
     {
         //Update View
         $futsals = Futsal::where('id',$id)->first();
@@ -128,24 +129,38 @@ class FutsalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function updateFutsal(Request $request, $id){
+    if ($file = $request->file('image')) {
+        $request->validate([
+            'image' =>'mimes:jpg,jpeg,png,bmp'
+        ]);
+        $image = $request->file('image');
+        $imgExt = $image->getClientOriginalExtension();
+        $fullname = time().".".$imgExt;
+        $result = $image->storeAs('images/futsals',$fullname);
+        }
+
+        else{
+            $fullname = 'image.png';
+        }
         //Update
         $futsals = Futsal::find($id)->first();
 
-        $futsals->name = $request->name;
-        $futsals->owner_name = $request->owner_name;
-        $futsals->photo = $fullname;
+        $futsals->owner_id = $request->owner_id || 0;
+        $futsals->name= $request->name;
+        $futsals->email = $request->email;
+        $futsals->image = $fullname;
         $futsals->contact = $request->contact;
+        $futsals->date = $request->date || null;
         $futsals->city = $request->city;
         $futsals->area = $request->area;
         $futsals->map = $request->map;
 
         if($futsals->save()){
-            return redirect('/futsal')->with('status', 'Post edited Successfully!');
+            return redirect('/admin/futsal')->with('status', 'Futsal updated Successfully!');
         }
         else{
-            return redirect('/futsal/$id/edit')->with('status', 'There was an error');
+            return redirect('admin/futsal/$id/edit')->with('status', 'There was an error');
 
         }
         //
@@ -157,14 +172,14 @@ class FutsalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deleteFutsal($id)
     {
         //Delete
         $futsals = Futsal::find($id);
         if($futsals->delete()){
-            return redirect('/futsal')->with('status', 'Post was deleted successfully');
+            return redirect('/admin/futsal')->with('status', 'Futsal was deleted successfully');
         }
-        else return redirect('/futsal')->with('status', 'There was an error');
+        else return redirect('/admin/futsal')->with('status', 'There was an error');
 
 
     }

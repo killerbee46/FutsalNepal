@@ -20,6 +20,7 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/admin';
     public const FUTSAL = '/futsal-admin/1';
     public const ADMIN = '/admin';
+    public const BOOKFUTSAL = '/futsals/{id}/book';
 
 
     /**

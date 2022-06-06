@@ -1,5 +1,5 @@
 .bg--primary{
-    background : #2bae66ff;
+    background : #2bae66ff !important;
 }
 .bg--secondary{
     background : #fcf6f5ff;
@@ -7,6 +7,6 @@
 .text--primary{
     color : #2bae66ff;
 }
-.text-secondary{
+.text--secondary{
     color : #fcf6f5ff;
 }

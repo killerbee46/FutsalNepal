@@ -22,7 +22,13 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/',[FrontendController::class, 'home']);
 Route::get('/futsals',[FrontendController::class, 'futsals']);
 Route::get('/futsals/{id}',[FrontendController::class, 'futsalDetail']);
-Route::get('/futsals/{id}/book',[FrontendController::class, 'booking']);
+Route::group(['prefix'=>'/futsals/{id}/book','middleware'=>'book-futsal'],function (){
+    Route::get('/',[FrontendController::class, 'booking']);
+});
+Route::group(['prefix'=>'/book-futsal','middleware'=>'book-futsal'],function (){
+    Route::post('/',[FrontendController::class, 'futsalBooking']);
+});
+
 
 require __DIR__.'/auth.php';
 
@@ -50,9 +56,9 @@ require __DIR__.'/auth.php';
             Route::post('/add-futsal',[FutsalController::class, 'store']);
     	    Route::post('/updatefutsalinfo/{id}',[FutsalController::class, 'UpdateFutsal']);
             Route::post('/search-futsal',[FutsalController::class, 'searchFutsalForAdmin']);
-            Route::get('/edit-futsal/{id}',[FutsalController::class, 'editFutsal']);
-            Route::post('/edit-futsal/{id}',[FutsalController::class, 'updateFutsal']);
-            Route::post('/delete-futsal/{id}',[FutsalController::class, 'deleteFutsal']);
+            Route::get('/{id}/edit',[FutsalController::class, 'editFutsal']);
+            Route::post('/edit/{id}',[FutsalController::class, 'updateFutsal']);
+            Route::post('/{id}/delete',[FutsalController::class, 'deleteFutsal']);
 
         });
 

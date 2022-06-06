@@ -14,24 +14,21 @@
 <table class='table table-shaded' style="width:90%;margin:auto">
 <tr>
     <th>Name</th>
-    <th>Owner Name</th>
+    <th>Email</th>
     <th>Contact</th>
     <th>Address</th>
-    <th>Embed Map</th>
     <th colspan="2">Actions</th>
 </tr>
 @foreach ($futsals as $futsal )
     <tr>
-        <td><a href="futsal/{{$futsal->id}}">{{$futsal->futsal_name}}</a></td>
-        <td>{{$futsal->owner_name}}</td>
-        <th>{{$futsal->contact}}</th>
+        <td>{{$futsal->name}}</a></td>
+        <td><a class="text no_deco primary" href="mailto:{{$futsal->email}}">{{$futsal->email}}</a></td>
+        <th><a class="text no_deco primary" href="callto:{{$futsal->contact}}">{{$futsal->contact}}</a></th>
     <td>{{$futsal->area}}, {{$futsal->city}}</td>
-    <td>{{$futsal->map}}</td>
-        <td><a href="/futsal/{{$futsal->id}}/edit"><button class="btn btn-primary">Edit</button></a></td>
+        <td><a href="/admin/futsal/{{$futsal->id}}/edit"><button class="btn btn-primary">Edit</button></a></td>
 
-        <form method="POST" action="/futsal/{{$futsal->id}}">
+        <form method="POST" action="/admin/futsal/{{$futsal->id}}/delete">
         @csrf
-        @method('delete')
         <td><button class='btn btn-danger'>Delete</button></td>
         </form>
 

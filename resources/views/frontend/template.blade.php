@@ -19,12 +19,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+        <link rel="stylesheet/text" href="./styles.css "/>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
                 <x-logo />
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -40,20 +41,42 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/futsals">Futsals</a>
                     </li>
+                    @if (Route::has('login'))
+                    @auth
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle btn btn-outline-primary" href="#" id="navbarDropdown"
+                        <a class="nav-link dropdown-toggle btn btn-default" href="#" id="navbarDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{Auth::user()->name}}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/profile/{{Auth::user()->id}}">Profile</a></li>
+                            @if(Auth::user()->role === 3)
+                            <li><a class="dropdown-item" href="/admin">Admin Control</a></li>
+                            @endif
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>
+
+                    @else
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle btn btn-default" href="#" id="navbarDropdown"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Get Started
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="/login">Login</a></li>
                             <li><a class="dropdown-item" href="/register">Register</a></li>
-                            <li>
+                            {{-- <li>
                                 <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Fuck Off</a></li>
+                            </li> --}}
                         </ul>
                     </li>
+
+                    @endauth
+                    @endif
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
