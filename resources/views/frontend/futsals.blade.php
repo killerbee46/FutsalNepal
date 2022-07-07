@@ -17,7 +17,7 @@
                 </p>
                 <div style="display: flex; justify-content: space-around;">
                     <a href="/futsals/{{$futsal->id}}" class="btn btn-primary">Details</a>
-                    <a href="/futsals/{{$futsal->id}}/book" class="btn btn-success">Book Now</a>
+                    <a href="/futsals/{{$futsal->id}}/book-today" class="btn btn-success">Book Now</a>
                 </div>
             </div>
         </div>

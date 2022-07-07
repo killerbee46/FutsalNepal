@@ -13,6 +13,50 @@
         body{
             font-family: Poppins;
         }
+
+        .go_navbar{
+            background: #2bae66ff;
+        }
+
+        .container.flex{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-item .nav-link{
+            color: white;
+        }
+        .nav-item .nav-link:hover{
+            background: rgb(62, 255, 149);
+            color: black;
+        }
+        .btn.btn__primary__outlined{
+            border: 1px solid white;
+            background: #2bae66ff;
+            color: white;
+        }
+        .btn.btn__primary__outlined:hover{
+            border: 1px solid #2bae66ff;
+            background: white;
+            color: #2bae66ff;
+        }
+        .tab_link{
+            text-decoration: none;
+        }
+        .nav-tabs .nav-link.custom__tab{
+            color: black;
+        }
+        .nav-tabs .nav-link.custom__tab.active{
+            color: #2bae66ff;
+        }
+        .logo:hover{
+            opacity: 70;
+            transform: scale(1.2)
+        }
+        .toggle_button.navbar-toggler-icon{
+            color: white;
+        }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -23,68 +67,86 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <x-logo />
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/futsals">Futsals</a>
-                    </li>
-                    @if (Route::has('login'))
-                    @auth
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle btn btn-default" href="#" id="navbarDropdown"
-                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{Auth::user()->name}}
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/profile/{{Auth::user()->id}}">Profile</a></li>
-                            @if(Auth::user()->role === 3)
-                            <li><a class="dropdown-item" href="/admin">Admin Control</a></li>
-                            @endif
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
-                        </ul>
-                    </li>
 
-                    @else
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle btn btn-default" href="#" id="navbarDropdown"
-                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Get Started
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/login">Login</a></li>
-                            <li><a class="dropdown-item" href="/register">Register</a></li>
-                            {{-- <li>
-                                <hr class="dropdown-divider">
-                            </li> --}}
-                        </ul>
-                    </li>
+        <div class="go_navbar">
+            <div class="container flex">
+                <a class="navbar-brand" href="/">
+                    <x-logo />
+                </a>
+                <nav class="navbar go_navbar navbar-expand-lg">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="toggle_button">
+                        <img width="20" src="{{asset('/images/toggle.png')}}" >
+                    </span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/futsals">Futsals</a>
+                        </li>
+                        @if (Route::has('login'))
+                        @auth
+                        <li class="nav-item">
+                            <a class="nav-link" href="/my-bookings">My Bookings</a>
+                        </li>
+                        @endauth
+                        @endif
+                        <li class="nav-item">
+                            <a class="nav-link" href="/futsals">Book Now</a>
+                        </li>
+                    </nav>
+                        <form class="d-flex" action="/futsals/search">
+                            <input class="form-control me-2" type="search" placeholder="Search by name or location" aria-label="Search">
+                            <button class="btn btn__primary__outlined" type="submit">Search</button>
+                        </form>
+                        @if (Route::has('login'))
+                        @auth
+                        <div class="nav-item dropdown custom">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false"
+                                style="position: relative;color: aliceblue;">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png"
+                                    alt="" width="32" height="32" class="rounded-circle me-2">
+                                <strong>{{Auth::user()->name}}</strong>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
+                                style="position: absolute;right: 0; left: auto;">
+                                <li><a class="dropdown-item" href="user/{{Auth::user()->id}}/profile">Profile</a></li>
+                                <li><a class="dropdown-item" href="/admin">Admin Control</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                            </ul>
+                        </div>
 
-                    @endauth
-                    @endif
-                </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                        @else
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle btn btn-default" href="#" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Get Started
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/login">Login</a></li>
+                                <li><a class="dropdown-item" href="/register">Register</a></li>
+                                {{-- <li>
+                                    <hr class="dropdown-divider">
+                                </li> --}}
+                            </ul>
+                        </div>
+
+                        @endauth
+                        @endif
+                    </ul>
+
+                </div>
             </div>
         </div>
-    </nav>
 
     <div>
         @yield('content')

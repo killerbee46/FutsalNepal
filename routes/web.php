@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 Use App\Http\Controllers\UserController;
 Use App\Http\Controllers\FutsalController;
 Use App\Http\Controllers\FrontendController;
+Use App\Http\Controllers\UserBookingController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -22,13 +23,16 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/',[FrontendController::class, 'home']);
 Route::get('/futsals',[FrontendController::class, 'futsals']);
 Route::get('/futsals/{id}',[FrontendController::class, 'futsalDetail']);
-Route::group(['prefix'=>'/futsals/{id}/book','middleware'=>'book-futsal'],function (){
-    Route::get('/',[FrontendController::class, 'booking']);
-});
+Route::get('/futsals/{id}/book-today',[UserBookingController::class, 'booking_today']);
+Route::get('/futsals/{id}/book-tomorrow',[UserBookingController::class, 'booking_tomorrow']);
+Route::get('/futsals/{id}/book-after',[UserBookingController::class, 'booking_after']);
+
 Route::group(['prefix'=>'/book-futsal','middleware'=>'book-futsal'],function (){
-    Route::post('/',[FrontendController::class, 'futsalBooking']);
+    Route::post('/',[UserBookingController::class, 'futsalBooking']);
 });
 
+// user booking
+Route::get('/my-bookings',[UserBookingController::class, 'userBooking']);
 
 require __DIR__.'/auth.php';
 

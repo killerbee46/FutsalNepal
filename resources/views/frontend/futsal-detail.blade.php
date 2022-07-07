@@ -18,7 +18,7 @@
                 We try to provide quality services to our customers try it out by booking our futsal and getting the
                 experience.
             </p>
-            <a href="/futsals/{{$futsal->id}}/book" class="btn btn-success">Book Now</a>
+            <a href="/futsals/{{$futsal->id}}/book/{{$today}}" class="btn btn-success">Book Now</a>
 
         </div>
     </div>
