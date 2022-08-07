@@ -16,7 +16,7 @@ class UserController extends Controller
 {
 	//  public function __construct()
     // {
-    // 	$this->middleware(function ($request, $next) {  
+    // 	$this->middleware(function ($request, $next) {
     //     if (!Auth::user()->role == 3) {
     //     	dd("error");
     //         abort(404);
@@ -65,12 +65,12 @@ class UserController extends Controller
                     dd('here');
                 }
 
-            } 
+            }
             else{
                 $this->validate($request, [
                     'email' => 'required|unique:users',
                 ]);
-              
+
             }
 
         }
@@ -113,7 +113,7 @@ class UserController extends Controller
 
     }
 
-   
+
 
     public function editUser($id)
     {
@@ -137,7 +137,7 @@ class UserController extends Controller
         $user->status = $request->status;
 
         if ($user->save()) {
-           
+
              return redirect('admin/users/')->with('success', 'User Updated Successfully.');
         }
 

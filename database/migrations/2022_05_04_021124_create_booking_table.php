@@ -17,9 +17,11 @@ class CreateBookingTable extends Migration
             $table->increments('id');
             $table->integer('booker_id')->unsigned();
             $table->integer('futsal_id')->unsigned();
-            $table->string('date');
-            $table->string('time');
+            $table->string('book_date');
+            $table->string('book_time');
+            $table->integer('penalty')->default(0);
             $table->boolean('isBooked')->default(0);
+            $table->boolean('paid')->default(0);
             $table->foreign('futsal_id')->references('id')->on('futsal');
             $table->foreign('booker_id')->references('id')->on('users');
             $table->timestamps();

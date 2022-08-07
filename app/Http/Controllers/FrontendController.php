@@ -22,12 +22,12 @@ class FrontendController extends Controller
     {
         $today = Carbon::now()->format('Y-m-d');
         $futsal = Futsal::all();
-       return view('frontend.futsals',compact('futsal','today'));
+       return view('frontend.futsal.futsals',compact('futsal','today'));
     }
     public function futsalDetail($id)
     {
         $today = Carbon::now()->format('Y-m-d');
         $futsal = Futsal::where('id', $id)->first();
-        return view('frontend.futsal-detail',compact('futsal','today'));
+        return view('frontend.futsal.futsal-detail',compact('futsal','today'));
     }
 }

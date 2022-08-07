@@ -13,7 +13,7 @@
         </div>
     @endif
 
-  <form method="POST" 
+  <form method="POST"
 action="{{url('admin/users/edit-user/'.$user->id)}}">
           @csrf
           <div class="field">
@@ -83,14 +83,37 @@ action="{{url('admin/users/edit-user/'.$user->id)}}">
             Admin
           </label>
           <label class="radio">
+            <input type="radio" name="role" value="2">
+            Futsal Owner
+          </label>
+          <label class="radio">
             <input type="radio" name="role" value="1">
             Player
           </label>
         @endif
+        @if($user->role == 2)
+            <label class="radio">
+            <input type="radio" name="role" value="3">
+            Admin
+          </label>
+          <label class="radio">
+            <input type="radio" name="role" value="2" checked="checked">
+            Futsal Owner
+          </label>
+          <label class="radio">
+            <input type="radio" name="role" value="1">
+            Player
+          </label>
+
+        @endif
         @if($user->role == 1)
             <label class="radio">
-            <input type="radio" name="role" value="3" checked="checked">
+            <input type="radio" name="role" value="3">
             Admin
+          </label>
+          <label class="radio">
+            <input type="radio" name="role" value="2">
+            Futsal Owner
           </label>
           <label class="radio">
             <input type="radio" name="role" value="1" checked="checked">

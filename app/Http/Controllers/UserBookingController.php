@@ -17,19 +17,22 @@ class UserBookingController extends Controller
         $date = Carbon::now()->format('Y-m-d');
         // $today->setTimezone('Asia/Kathmandu');
         $booking = Booking::all()->where('futsal_id',$id)->where('date',$date);
-        $time = DB::select("SELECT * FROM times WHERE time NOT IN ( SELECT time from booking where isBooked = 1 AND date = $date )");
-        $booked_time = DB::select("SELECT * FROM times WHERE time IN( SELECT time from booking where isBooked = 1 AND date = $date )");
-        return view('frontend.booking.booking_today',compact('futsal','booking','time', 'date','booked_time'));
+        $time = DB::select('SELECT * FROM times WHERE book_time NOT IN ( SELECT book_time from booking where isBooked = 1 AND book_date = ? AND futsal_id = ? )',[$date,$id]);
+        $booked_time = DB::select('SELECT * FROM times WHERE book_time IN ( SELECT book_time from booking where isBooked = 1 AND book_date = ? AND futsal_id = ? )',[$date,$id]);
+        $my_booking = DB::select('SELECT * FROM times WHERE book_time IN ( SELECT book_time from booking where isBooked = 1 AND book_date = ? AND futsal_id = ? AND booker_id =? )',[$date,$id,Auth::user()->id]);
+        $booking_count =  count($my_booking);
+        return view('frontend.booking.booking_today',compact('futsal','booking','time', 'date','booked_time', 'my_booking','booking_count'));
     }
     public function booking_tomorrow($id)
     {
         $futsal = Futsal::where('id', $id)->first();
         // $today->setTimezone('Asia/Kathmandu');
         $date = Carbon::now()->addDay()->format('Y-m-d');
-        $booking = Booking::all()->where('futsal_id',$id)->where('date',$date);
-        $time = DB::select("SELECT * FROM times WHERE time NOT IN ( SELECT time from booking where isBooked = 1 AND date = $date )");
-        $booked_time = DB::select("SELECT * FROM times WHERE time IN( SELECT time from booking where isBooked = 1 AND date = $date )");
-        return view('frontend.booking.booking_tomorrow',compact('futsal','booking','time', 'date','booked_time'));
+        $time = DB::select('SELECT * FROM times WHERE book_time NOT IN ( SELECT book_time from booking where isBooked = 1 AND book_date = ? AND futsal_id = ? )',[$date,$id]);
+        $booked_time = DB::select('SELECT * FROM times WHERE book_time IN ( SELECT book_time from booking where isBooked = 1 AND book_date = ? AND futsal_id = ? )',[$date,$id]);
+        $my_booking = DB::select('SELECT * FROM times WHERE book_time IN ( SELECT book_time from booking where isBooked = 1 AND book_date = ? AND futsal_id = ? AND booker_id =? )',[$date,$id,Auth::user()->id]);
+        $booking_count =  count($my_booking);
+        return view('frontend.booking.booking_tomorrow',compact('futsal','time', 'date','booked_time','my_booking','booking_count'));
     }
     public function booking_after($id)
     {
@@ -37,25 +40,25 @@ class UserBookingController extends Controller
         // $today->setTimezone('Asia/Kathmandu');
         $date = Carbon::now()->addDays(2)->format('Y-m-d');
         $booking = Booking::all()->where('futsal_id',$id)->where('date',$date);
-        $time = DB::select("SELECT * FROM times WHERE time NOT IN ( SELECT time from booking where isBooked = 1 AND date = $date )");
-        $booked_time = DB::select("SELECT * FROM times WHERE time IN( SELECT time from booking where isBooked = 1 AND date = $date )");
-        return view('frontend.booking.booking_after',compact('futsal','booking','time', 'date','booked_time'));
+        $time = DB::select('SELECT * FROM times WHERE book_time NOT IN ( SELECT book_time from booking where isBooked = 1 AND book_date = ? AND futsal_id = ? )',[$date,$id]);
+        $booked_time = DB::select('SELECT * FROM times WHERE book_time IN ( SELECT book_time from booking where isBooked = 1 AND book_date = ? AND futsal_id = ? )',[$date,$id]);
+        $my_booking = DB::select('SELECT * FROM times WHERE book_time IN ( SELECT book_time from booking where isBooked = 1 AND book_date = ? AND futsal_id = ? AND booker_id =? )',[$date,$id,Auth::user()->id]);
+        $booking_count =  count($my_booking);
+        return view('frontend.booking.booking_after',compact('futsal','booking','time', 'date','booked_time','my_booking','booking_count'));
     }
 
     public function futsalBooking(Request $request){
         $request->validate([
-            'date' => 'required',
+            'book_date' => 'required',
             'futsal_id' => 'required',
-            'booker_id' => 'required',
-            'time'=> 'required',
+            'book_time'=> 'required',
             'isBooked' => 'required'
         ]);
-
         $booking = new Booking();
         $booking->futsal_id = $request->futsal_id;
-        $booking->booker_id = $request->booker_id;
-        $booking->date = $request->date;
-        $booking->time = $request->time;
+        $booking->booker_id = Auth::user()->id;
+        $booking->book_date = $request->book_date;
+        $booking->book_time = $request->book_time;
         $booking->isbooked = 1;
         $booking->save();
 
@@ -68,12 +71,35 @@ class UserBookingController extends Controller
         }
     }
 
-    public function cancelBooking(){
-
+    public function cancelBooking(Request $request){
+        $booking = new Booking();
+        $booking->penalty = 30;
+        $booking->isBooked = 0;
+        if($booking->save()){
+            //Redirect with Flash message
+            return redirect("/my-bookings")->with('status', 'Booking cancelled Successfully!');
+        }
+        else{
+            return redirect("/futsals/$request->futsal_id/book-today")->with('status', 'Could not cancel booking at the moment!');
+        }
     }
 
     public function userBooking(){
-        $booking_list = Booking::where('booker_id',2)->get();
+        $booking_list = Booking::where('booker_id',auth()->user()->id)->get();
         return view('frontend.booking.user-bookings',compact('booking_list'));
+    }
+
+    public function searchFutsal(Request $request){
+        $keyword=$request->keyword;
+        $futsal= Futsal::orWhere('name','Like',"%$keyword%")->orWhere('city','Like',"%$keyword%")->orWhere('area','Like',"%$keyword%")->get();
+        $count = $futsal->count();
+        // dd($count);
+        if($count === 0){
+            $message ="Sorry! No Match For Your Search";
+        }
+        else{
+            $message = "";
+        }
+        return view('frontend.futsal.futsal-search',compact('futsal','keyword','message'));
     }
 }

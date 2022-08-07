@@ -53,6 +53,7 @@ class FutsalController extends Controller
             'image'=>'required',
             'contact'=>'required',
             'city'=>'required',
+            'price'=>'required',
             'area'=>'required',
             'map'=>'required'
         ]);
@@ -78,6 +79,7 @@ class FutsalController extends Controller
         $futsals->image = $fullname;
         $futsals->contact = $request->contact;
         $futsals->date = $request->date || null;
+        $futsals->price = $request->price;
         $futsals->city = $request->city;
         $futsals->area = $request->area;
         $futsals->map = $request->map;

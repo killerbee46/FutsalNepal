@@ -20,7 +20,12 @@ class Admin
 
         	return $next($request);
         }
-        return redirect('/');
+        else if (auth()->check()){
+            return redirect('/');
+        }
+        else{
+            return redirect('/login');
+        }
 
     }
 }

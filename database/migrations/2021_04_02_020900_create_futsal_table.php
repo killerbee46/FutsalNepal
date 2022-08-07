@@ -24,6 +24,8 @@ class CreateFutsalTable extends Migration
             $table->string('city');
             $table->string('area');
             $table->string('map');
+            $table->integer('price');
+            $table->foreign('owner_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
