@@ -1,4 +1,4 @@
-@extends('frontend.template')
+@extends('futsal-admin.futsal-admin-master')
 
 @section('content')
     @if (session('status'))
@@ -8,27 +8,24 @@
     @endif
 
     <div class="container py-5">
-        @if ($booking_count === 3)
-        <p class="text-danger text-center">Maximum Booking Limit Reached for Today!!!</p>
-        @endif
 
         <h3><a href="/futsals/{{ $futsal->id }}" style="text-decoration: none;color:#2bae66ff;">{{$futsal->name}}</a></h3>
 
         <ul class="nav nav-tabs d-flex justify-content-center my-4" id="myTab" role="tablist">
-            <a class="tab_link" href="/futsals/{{ $futsal->id }}/book-today">
+            <a class="tab_link" href="/futsal-admin/bookings">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active custom__tab" id="today-tab" data-bs-toggle="tab" data-bs-target="#today"
+                    <button class="nav-link custom__tab" id="today-tab" data-bs-toggle="tab" data-bs-target="#today"
                         type="button" role="tab" aria-controls="today" aria-selected="true">Today</button>
                 </li>
             </a>
-            <a class="tab_link" href="/futsals/{{ $futsal->id }}/book-tomorrow">
+            <a class="tab_link" href="/futsal-admin/bookings/tomorrow">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link custom__tab" id="tomorrow-tab" data-bs-toggle="tab"
+                    <button class="nav-link active custom__tab" id="tomorrow-tab" data-bs-toggle="tab"
                         data-bs-target="#tomorrow" type="button" role="tab" aria-controls="tomorrow"
                         aria-selected="false">Tomorrow</button>
                 </li>
             </a>
-            <a class="tab_link" href="/futsals/{{ $futsal->id }}/book-after">
+            <a class="tab_link" href="/futsal-admin/bookings/day-after">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link custom__tab" id="after-tab" data-bs-toggle="tab" data-bs-target="#after"
                         type="button" role="tab" aria-controls="after" aria-selected="false">Day After</button>
@@ -44,7 +41,7 @@
                                 <div class="card" style="color:white;background:#2bae66ff">
                                     <div class="card-body text-center">
                                         <h5 class="card-title">{{ $time->book_time }}</h5>
-                                        <p>Available</p>
+                                        <p>{{ $futsal->isBooked ? 'Booked' : 'Available' }}</p>
                                     </div>
                                 </div>
                             </button>
@@ -111,9 +108,9 @@
                             </form>
                         </div>
                     @endforeach
-                </div>
 
-                <h3>{{ $my_booking ? 'My Bookings' : '' }}</h3>
+                    <br />
+                    <h3>{{ $my_booking ? 'My Bookings' : '' }}</h3>
                     @foreach ($booked_time as $time)
                         <div class="col-3">
 
@@ -129,6 +126,7 @@
                                     <div class="card" style="color:white;background:red">
                                         <div class="card-body text-center">
                                             <h5 class="card-title">{{ $time->book_time }}</h5>
+                                            <p>Booked</p>
                                         </div>
                                     </div>
                                 </button>
@@ -166,6 +164,7 @@
                             </form>
                         </div>
                     @endforeach
+                </div>
 
             </div>
         @endsection

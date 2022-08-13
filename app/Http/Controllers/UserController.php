@@ -93,7 +93,7 @@ class UserController extends Controller
                     $image = $request->file('profile_pic');
                     $imgExt = $image->getClientOriginalExtension();
                     $fullname = time().".".$imgExt;
-                    $result = $image->storeAs('images',$fullname);
+                    $result = $image->storeAs('images/users',$fullname);
 
             }
             else{

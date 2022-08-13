@@ -80,7 +80,7 @@
             <hr>
             <ul class="nav nav-pills flex-column mb-auto menu">
                 <li class="nav-item">
-                    <a href="/" class="nav-link text-white" aria-current="page">
+                    <a href="/futsal-admin" class="nav-link text-white" aria-current="page">
                         <svg class="bi me-2" width="16" height="16">
                             <use xlink:href="#home"></use>
                         </svg>
@@ -88,31 +88,39 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/users" class="nav-link text-white">
-                        <svg class="bi me-2" width="16" height="16">
-                            <use xlink:href="#speedometer2"></use>
-                        </svg>
-                        Users
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/futsal" class="nav-link text-white">
+                    <a href="/futsal-admin/futsal" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16">
                             <use xlink:href="#table"></use>
                         </svg>
-                        Futsals
+                        Futsal
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/time" class="nav-link text-white">
+                    <a href="/futsal-admin/bookings" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16">
-                            <use xlink:href="#grid"></use>
+                            <use xlink:href="#table"></use>
                         </svg>
-                        Time
+                        Booking
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/{{Auth::user()->id}}/profile" class="nav-link text-white">
+                    <a href="/futsal-admin/bookings/all" class="nav-link text-white">
+                        <svg class="bi me-2" width="16" height="16">
+                            <use xlink:href="#table"></use>
+                        </svg>
+                        All Bookings
+                    </a>
+                </li>
+                <li>
+                    <a href="/futsal-admin/bookings/cancelled" class="nav-link text-white">
+                        <svg class="bi me-2" width="16" height="16">
+                            <use xlink:href="#table"></use>
+                        </svg>
+                        Cancelled
+                    </a>
+                </li>
+                <li>
+                    <a href="/futsal-admin/{{Auth::user()->id}}/profile" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16">
                             <use xlink:href="#people-circle"></use>
                         </svg>
@@ -128,7 +136,7 @@
                 <strong>{{Auth::user()->name}}</strong>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="/admin/{{Auth::user()->id}}/profile">Profile</a></li>
+                <li><a class="dropdown-item" href="/futsal-admin/{{Auth::user()->id}}/profile">Profile</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -139,7 +147,7 @@
         <div class="col p-0">
             <nav class="navbar navbar-dark bg-dark">
                 <div class="container-fluid" style="display: flex;">
-                    <div class="navbar-brand">Hello Peter</div>
+                    <div class="navbar-brand"></div>
                     <div>
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false"
@@ -150,7 +158,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
                             style="position: absolute;right: 0; left: auto;">
-                            <li><a class="dropdown-item" href="admin/{{Auth::user()->id}}/profile">Profile</a></li>
+                            <li><a class="dropdown-item" href="/futsal-admin/{{Auth::user()->id}}/profile">Profile</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

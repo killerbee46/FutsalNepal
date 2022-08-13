@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 Use App\Http\Controllers\UserController;
 Use App\Http\Controllers\FutsalController;
+Use App\Http\Controllers\FutsalAdminController;
 Use App\Http\Controllers\FrontendController;
 Use App\Http\Controllers\UserBookingController;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +28,7 @@ Route::get('/futsals/{id}/book-today',[UserBookingController::class, 'booking_to
 Route::get('/futsals/{id}/book-tomorrow',[UserBookingController::class, 'booking_tomorrow']);
 Route::get('/futsals/{id}/book-after',[UserBookingController::class, 'booking_after']);
 Route::post('/search',[UserBookingController::class, 'searchFutsal']);
+Route::get('/user/{id}/profile',[FrontendController::class, 'profile']);
 
 Route::group(['prefix'=>'/futsals/{id}/book-today','middleware'=>'book-futsal'],function (){
     Route::get('/',[UserBookingController::class, 'booking_today']);
@@ -76,3 +78,24 @@ require __DIR__.'/auth.php';
 
 
     });
+
+
+    Route::group(['prefix'=>'futsal-admin','middleware'=>'futsal'],function (){
+        Route::get('/',[FutsalAdminController::class, 'index']);
+
+        Route::get('/{id}/profile',[FutsalAdminController::class, 'profile']);
+
+        Route::group(['prefix'=>'futsal','middleware'=>'auth'],function (){
+
+    	    Route::get('/',[FutsalAdminController::class, 'futsal']);
+        });
+        Route::group(['prefix'=>'bookings','middleware'=>'auth'],function (){
+
+    	    Route::get('/',[FutsalAdminController::class, 'booking']);
+            Route::get('/tomorrow',[FutsalAdminController::class, 'bookingTomorrow']);
+            Route::get('/day-after',[FutsalAdminController::class, 'bookingAfter']);
+            Route::get('/all',[FutsalAdminController::class, 'allBookings']);
+            Route::get('/cancelled',[FutsalAdminController::class, 'cancelledBookings']);
+        });
+    });
+    Route::get('/add-futsal',[FutsalAdminController::class, 'addFutsal']);

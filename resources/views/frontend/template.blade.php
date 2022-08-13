@@ -121,6 +121,100 @@
             text-decoration: none;
             color: white;
         }
+        .banner-img{
+            width: 100%;
+            height: 92vh;
+        }
+        .nav-link.get-started{
+            background: green;
+            color: white;
+        }
+        .nav-link.get-started:hover{
+            background: white;
+            color: green;
+        }
+        .nav-link.get-started:focus{
+            background: white;
+            color: green;
+        }
+
+        .cover-slider{
+            position: relative;
+        }
+        .cover-slider .slider-title{
+            position: absolute;
+            top: 50px;
+            right: 100px;
+            font-weight: 600;
+            font-size: 60px;
+        }
+        .cover-slider .slider-sub-title{
+            position: absolute;
+            top: 120px;
+            right: 100px;
+            color: white;
+            font-weight: 600;
+            font-size: 38px;
+        }
+
+        .profile-card-2 {
+    max-width: 300px;
+    height: 350px;
+    background-color: #FFF;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
+    background-position: center;
+    overflow: hidden;
+    position: relative;
+    margin: 0;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.profile-card-2 img {
+    transition: all linear 0.25s;
+    height: 100%;
+    margin: 0;
+}
+
+.profile-card-2 .profile-name {
+    position: absolute;
+    left: 30px;
+    bottom: 90px;
+    font-size: 24px;
+    color: #FFF;
+    text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    transition: all linear 0.25s;
+}
+
+.profile-card-2 .profile-button-1 {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    color: #FFF;
+    transition: all linear 0.25s;
+}
+
+.profile-card-2 .profile-username {
+    position: absolute;
+    bottom: 80px;
+    left: 30px;
+    color: #FFF;
+    font-size: 13px;
+    transition: all linear 0.25s;
+}
+
+.profile-card-2:hover .profile-name {
+    bottom: 100px;
+}
+
+.profile-card-2:hover .profile-username {
+    bottom: 90px;
+}
+
+.profile-card-2:hover .profile-button-1 {
+    bottom: 40px;
+}
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -131,7 +225,6 @@
 </head>
 
 <body>
-
     <div class="go_navbar">
         <div class="container flex">
             <a class="navbar-brand" href="/">
@@ -175,7 +268,7 @@
                     <div class="nav-item dropdown custom">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false" style="position: relative;color: aliceblue;">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png"
+                            <img src="{{ Auth::user()->profile_pic ? asset('/images/users/'.Auth::user()->profile_pic) : asset('/images/default.png')}}"
                                 alt="" width="32" height="32" class="rounded-circle me-2">
                             <strong>{{ Auth::user()->name }}</strong>
                         </a>
@@ -185,6 +278,9 @@
                             @if (Auth()->user()->isAdmin())
                             <li><a class="dropdown-item" href="/admin">Admin Control</a></li>
                             @endif
+                            @if (Auth()->user()->isFutsal())
+                            <li><a class="dropdown-item" href="/futsal-admin">Futsal Admin</a></li>
+                            @endif
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -193,7 +289,7 @@
                     </div>
                 @else
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle btn btn-default" href="#" id="navbarDropdown"
+                        <a class="nav-link dropdown-toggle btn btn-default get-started" href="#" id="navbarDropdown"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Get Started
                         </a>

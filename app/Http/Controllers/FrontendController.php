@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Futsal;
 use App\Models\Booking;
+use App\Models\User;
 use App\Models\Time;
 use Carbon\Carbon;
 
@@ -30,4 +31,12 @@ class FrontendController extends Controller
         $futsal = Futsal::where('id', $id)->first();
         return view('frontend.futsal.futsal-detail',compact('futsal','today'));
     }
+
+    public function profile($id)
+    {
+        $user = User::where('id',$id)->first();
+        // dd($user);
+        return view('frontend.profile',compact('user'));
+    }
+
 }
