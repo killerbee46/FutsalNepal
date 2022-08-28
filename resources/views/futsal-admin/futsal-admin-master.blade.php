@@ -26,7 +26,33 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<style>
+    .tab_link {
+            text-decoration: none;
+        }
 
+        .nav-tabs .nav-link.custom__tab {
+            color: black;
+        }
+
+        .nav-tabs .nav-link.custom__tab.active {
+            color: #2bae66ff;
+        }
+        .card.dash_card{
+            width: fit-content;
+            padding: 5px 10px;
+            text-align: center;
+            background: rgb(58, 58, 58);
+            color: white;
+        }
+        .dash_card_title{
+            font-size: 20px;
+        }
+        .dash_card_number{
+            font-size: 30px;
+            font-weight: 600;
+        }
+</style>
 
 </head>
 

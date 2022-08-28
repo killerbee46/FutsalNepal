@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/',[FrontendController::class, 'home']);
 Route::get('/futsals',[FrontendController::class, 'futsals']);
+Route::get('/how-it-works',[FrontendController::class, 'howItWorks']);
 Route::get('/futsals/{id}',[FrontendController::class, 'futsalDetail']);
 Route::get('/futsals/{id}/book-today',[UserBookingController::class, 'booking_today']);
 Route::get('/futsals/{id}/book-tomorrow',[UserBookingController::class, 'booking_tomorrow']);
@@ -45,11 +46,12 @@ require __DIR__.'/auth.php';
 // Route::get('/user',[UserController::class, 'index']);
 
  Route::group(['prefix'=>'admin','middleware'=>'admin'],function (){
-        Route::get('/',[UserController::class, 'index']);
+    Route::get('/',[UserController::class, 'AdminIndex']);
 
         Route::group(['prefix'=>'users','middleware'=>'auth'],function (){
 
     	    Route::get('/',[UserController::class, 'index']);
+            Route::post('/change-status/{id}/{status}',[UserController::class, 'changeStatus']);
     	    Route::post('/updateuserinfo/{id}',[UserController::class, 'UpdateUser']);
     	    Route::get('/add-user',[UserController::class, 'addUser']);
             Route::post('/search-user',[UserController::class, 'searchuserForAdmin']);
@@ -71,6 +73,9 @@ require __DIR__.'/auth.php';
             Route::post('/{id}/delete',[FutsalController::class, 'deleteFutsal']);
 
         });
+        Route::group(['prefix'=>'profile','middleware'=>'auth'],function (){
+            Route::get('/',[UserController::class, 'profile']);
+            });
 
         Route::get('/time',function(){
             return view('admin.time.index');
@@ -84,6 +89,8 @@ require __DIR__.'/auth.php';
         Route::get('/',[FutsalAdminController::class, 'index']);
 
         Route::get('/{id}/profile',[FutsalAdminController::class, 'profile']);
+        Route::post('/futsal/update',[FutsalAdminController::class, 'updateFutsal']);
+
 
         Route::group(['prefix'=>'futsal','middleware'=>'auth'],function (){
 

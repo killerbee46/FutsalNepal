@@ -148,7 +148,7 @@ class FutsalController extends Controller
         //Update
         $futsals = Futsal::find($id)->first();
 
-        $futsals->owner_id = $request->owner_id || 0;
+        $futsals->owner_id = $request->owner_id;
         $futsals->name= $request->name;
         $futsals->email = $request->email;
         $futsals->image = $fullname;

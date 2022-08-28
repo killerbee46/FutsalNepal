@@ -1,13 +1,6 @@
 @extends('admin.adminmaster')
 @section('content')
-@php
-    $status_list = [
-        ["value" => 'pending', "label" =>"Pending"],
-        ["value"=> 'approved', "label"=>"Approved"],
-        ["value"=> 'blocked', "label"=>"Blocked"],
-        ["value"=> 'deactive', "label"=>"Deactivated"],
-    ]
-@endphp
+
 <div class="container">
         @if (session('error'))
             <div class="alert alert-danger">
@@ -48,29 +41,50 @@
              </thead>
 
              @foreach($data as $user)
+
              @php
                 $user->status === "blocked" ? (
                     [
                     $status="Blocked",
-                    $background="red"
+                    $background="red",
+                    $option = [
+                        // ["value" => 'approved', "label" =>"UnBlock"]
+                        "approved"
+                    ]
                     ]
                 )
                 :($user->status === "approved" ? (
                     [
                     $status="Approved",
-                    $background="lime"
+                    $background="lime",
+                    $option = [
+        //                 ["value" => 'blocked', "label" =>"Block"],
+        // ["value"=> 'deactivated', "label"=>"Deactivate"],
+        "blocked",
+        "deactivated"
+                    ]
                     ]
                 )
                 :($user->status === "deactive" ? (
                     [
                     $status="Deactivated",
-                    $background="purple"
+                    $background="purple",
+                    $option = [
+                        // ["value" => 'blocked', "label" =>"Block"],
+                        // ["value"=> 'deactivated', "label"=>"Deactivate"],
+                        "blocked",
+                        "deactivated"
+                    ]
                     ]
                 ) :
                 (
                     [
                         $status="Pending",
-                        $background="rgb(151, 151, 151)"
+                        $background="rgb(151, 151, 151)",
+                        $option = [
+                        'approved',
+                        'declined'
+                    ]
                     ]
 
                 )
@@ -80,22 +94,26 @@
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
                     <td>
-                        <form>
                             <div class="dropdown">
                                 <button style="background: {{$background}}" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     {{$status}}
                                 </button>
                                 <ul class="dropdown-menu">
-                                  <li><span class="dropdown-item {{$user->status === "approved" ? "disabled" :""}}">
-                                <form>
-                                    <button class="btn" style="background: rgb(34, 194, 34); border: none; width:100%;text-align: left;">Approve</button>
-                                </form>
-                                </span></li>
-                                  <li><span class="dropdown-item {{$user->status === "blocked" ? "disabled" :""}}">Block</span></li>
-                                  <li><span class="dropdown-item {{$user->status === "deactive" ? "disabled" :""}}">Deactivate</span></li>
+                                  @foreach ($option as $opt)
+                                  <li><span class="dropdown-item">
+                                    <form method="POST" action="{{url('admin/users/change-status/'.$user->id."/".$opt)}}">
+                                        @csrf
+                                        <button class="btn" style="border: none; width:100%;text-align: left;">{{
+                                            $opt == "approved" ? "Approve" :
+                                            ($opt == "blocked"? "Block" :
+                                            ($opt == "declined" ? "Decline" :
+                                            ($opt == "deactivated" ? "Deactivate" :
+                                            null)))}}</button>
+                                    </form>
+                                    </span></li>
+                                  @endforeach
                                 </ul>
                               </div>
-                        </form>
                     </td>
                     <td>
 

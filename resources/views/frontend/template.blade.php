@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Go Futsal</title>
+    <title>@yield('title')</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>
@@ -139,19 +139,28 @@
         }
 
         .cover-slider{
+            background:linear-gradient(to left, rgba(0, 0, 0, 0.541), transparent);
             position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+        .cover-slider .banner-img{
+            margin-top: -300px;
+            position: relative;
+            z-index: -1;
+        }
+        .cover-slider .text{
+            position: absolute;
+            top: 30px;
+            right: 130px;
+            text-align: right;
         }
         .cover-slider .slider-title{
-            position: absolute;
-            top: 50px;
-            right: 100px;
             font-weight: 600;
             font-size: 60px;
+            color:white;
         }
         .cover-slider .slider-sub-title{
-            position: absolute;
-            top: 120px;
-            right: 100px;
             color: white;
             font-weight: 600;
             font-size: 38px;
@@ -170,6 +179,10 @@
     border-radius: 10px;
 }
 
+.profile-card-2.col-3{
+    margin: 20px 10px;
+    padding: 0;
+}
 .profile-card-2 img {
     transition: all linear 0.25s;
     height: 100%;
@@ -215,6 +228,46 @@
 .profile-card-2:hover .profile-button-1 {
     bottom: 40px;
 }
+.stats{
+    background: rgb(12, 173, 79);
+    padding: 0;
+    text-align: center;
+}
+.stats .col-4{
+    padding: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.438);
+}
+.stats .title{
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+}
+.stats .number{
+    color: aliceblue;
+    margin-top: -10px;
+    font-size: 30px;
+    font-weight: 600;
+}
+.hiw-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.hiw-section .number{
+    font-size: 30px;
+    background: #ff3300;
+    color: wheat;
+    border-radius: 50%;
+    padding: 10px 25px;
+    width: fit-content;
+}
+.hiw-section .text{
+    font-size: 30px;
+    font-weight: 600;
+    padding: 5px 10px;
+    width: fit-content;
+}
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -254,7 +307,7 @@
                             @endauth
                         @endif
                         <li class="nav-item">
-                            <a class="nav-link" href="/futsals">How to Book</a>
+                            <a class="nav-link" href="/how-it-works">How It Works</a>
                         </li>
             </nav>
             <form class="d-flex" method="POST" action="/search">
@@ -274,7 +327,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
                             style="position: absolute;right: 0; left: auto;">
-                            <li><a class="dropdown-item" href="user/{{ Auth::user()->id }}/profile">Profile</a></li>
+                            <li><a class="dropdown-item" href="/user/{{ Auth::user()->id }}/profile">Profile</a></li>
                             @if (Auth()->user()->isAdmin())
                             <li><a class="dropdown-item" href="/admin">Admin Control</a></li>
                             @endif

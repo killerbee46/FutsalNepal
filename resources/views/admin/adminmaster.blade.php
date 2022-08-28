@@ -26,7 +26,23 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-
+    <style>
+        .card.dash_card{
+            width: fit-content;
+            padding: 5px 10px;
+            text-align: center;
+            background: rgb(58, 58, 58);
+            color: white;
+            margin: 0 20px;
+        }
+        .dash_card_title{
+            font-size: 20px;
+        }
+        .dash_card_number{
+            font-size: 30px;
+            font-weight: 600;
+        }
+    </style>
 
 </head>
 
@@ -80,7 +96,7 @@
             <hr>
             <ul class="nav nav-pills flex-column mb-auto menu">
                 <li class="nav-item">
-                    <a href="/" class="nav-link text-white" aria-current="page">
+                    <a href="/admin" class="nav-link text-white" aria-current="page">
                         <svg class="bi me-2" width="16" height="16">
                             <use xlink:href="#home"></use>
                         </svg>
@@ -112,7 +128,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/{{Auth::user()->id}}/profile" class="nav-link text-white">
+                    <a href="/admin/profile" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16">
                             <use xlink:href="#people-circle"></use>
                         </svg>

@@ -1,5 +1,9 @@
 @extends('futsal-admin.futsal-admin-master')
 
+@section('title')
+Booking - Day after
+@endsection
+
 @section('content')
     @if (session('status'))
         <div class="alert alert-success">
@@ -7,9 +11,7 @@
         </div>
     @endif
 
-    <div class="container py-5">
-
-        <h3><a href="/futsals/{{ $futsal->id }}" style="text-decoration: none;color:#2bae66ff;">{{$futsal->name}}</a></h3>
+    <div class="container">
 
         <ul class="nav nav-tabs d-flex justify-content-center my-4" id="myTab" role="tablist">
             <a class="tab_link" href="/futsal-admin/bookings">
@@ -54,11 +56,25 @@
                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
 
-                                    <div class="modal-body">
-                                      Charges may apply in case of cancellation.
-                                    </div>
+
+                                    <form method='post' action="/book-futsal">
+                                        @csrf
+                                        <div class="modal-body">
+
+
+                                        <input name='book_date' value={{ $date }} type="hidden" />
+                                            <input name='futsal_id' value={{ $futsal->id }} type="hidden" />
+                                            User: <select class="form-select" name="booker_id">
+                                                <option>Select a user</option>
+                                                @foreach ($users as $user)
+                                                    <option value={{$user->id}}>{{$user->name}}</option>
+                                                @endforeach
+                                            </select>
+                                            <input name='book_time' value={{ $time->book_time }} type="hidden" />
+                                            <input name='isBooked' value={{ 1 }} type="hidden" />
+                                        </div>
                                     <div class="modal-footer">
-                                        <button type="button" onsubmit="" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                         {{-- <form method='post' action="/book-futsal">
                                             @csrf
                                             <input name='date' value={{ $date }} type="hidden" />
@@ -67,17 +83,13 @@
                                             <input name='time' value={{ $time->time }} type="hidden" />
                                             <button class="btn btn-primary">Confirm</button>
                                         </form> --}}
-                                        <form method='post' action="/book-futsal">
-                                            @csrf
-                                            <input name='book_date' value={{ $date }} type="hidden" />
-                                            <input name='futsal_id' value={{ $futsal->id }} type="hidden" />
-                                            <input name='booker_id' value={{ Auth::user()->id }} type="hidden" />
-                                            <input name='book_time' value={{ $time->book_time }} type="hidden" />
-                                            <input name='isBooked' value={{ 1 }} type="hidden" />
-                                            <button class="btn btn-primary">Confirm</button>
-                                        </form>
+
+
+                                            <button type="submit" class="btn btn-primary">Confirm</button>
+
 
                                     </div>
+                                    </form>
                                   </div>
                                 </div>
                               </div>
@@ -85,32 +97,6 @@
                     @endforeach
                     <br />
                     <h3>{{ $booked_time ? 'Booked Sessions' : '' }}</h3>
-                    @foreach ($booked_time as $time)
-                        <div class="col-3">
-                            <form method='post' action="#">
-                                {{-- @csrf
-                            <input name='date' value={{$today}} type="hidden" />
-                            <input name='futsal_id' value={{$futsal->id}} type="hidden" />
-                            <input name='booker_id' value={{Auth::user()->id}} type="hidden" />
-                            <input name='time' value={{$time->time}} type="hidden" />
-                            <input name='isBooked' value={{1}} type="hidden" /> --}}
-                                {{-- <input name='startTime' value="{{$i}}:00" type="hidden" />
-                            <input name='endTime' value="{{$i+1}}:00" type="hidden" /> --}}
-                                <button disabled class="btn" style="width: 100%">
-                                    <div class="card" style="color:white;background:red">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title">{{ $time->book_time }}</h5>
-                                            <p>Booked</p>
-                                        </div>
-                                    </div>
-                                </button>
-
-                            </form>
-                        </div>
-                    @endforeach
-
-                    <br />
-                    <h3>{{ $my_booking ? 'My Bookings' : '' }}</h3>
                     @foreach ($booked_time as $time)
                         <div class="col-3">
 
@@ -137,13 +123,13 @@
                                           <h5 class="modal-title" id="cancelLabel">Confirm Booking?</h5>
                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-
+                                        <form method='post' action="/cancel-booking">
+                                            @csrf
                                         <div class="modal-body">
-                                          Are you sure you want to cancel booking?
-                                          {{-- {{$message}} --}}
+                                          Remarks: <textarea class="form-input col-12" name='remarks' placeholder="Enter a remark..." ></textarea>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" onsubmit="" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                             {{-- <form method='post' action="/book-futsal">
                                                 @csrf
                                                 <input name='date' value={{ $date }} type="hidden" />
@@ -152,9 +138,7 @@
                                                 <input name='time' value={{ $time->time }} type="hidden" />
                                                 <button class="btn btn-primary">Confirm</button>
                                             </form> --}}
-                                            <form method='post' action="/cancel-booking">
-                                                @csrf
-                                                <button class="btn btn-danger">Confirm</button>
+                                                <button type="submit" class="btn btn-danger">Confirm</button>
                                             </form>
 
                                         </div>
@@ -164,6 +148,7 @@
                             </form>
                         </div>
                     @endforeach
+
                 </div>
 
             </div>

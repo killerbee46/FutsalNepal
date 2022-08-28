@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Futsal;
+use App\Models\Booking;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Hash;
@@ -164,5 +166,30 @@ class UserController extends Controller
         return view('admin.user.searchuserview',compact('data','searched'));
     }
 
+    public function AdminIndex()
+    {
+        $futsal = Futsal::all()->count();
+        $booking = Booking::all()->count();
+        $user = User::all()->count();
+        $latest = Booking::orderBy("id","DESC")->paginate(7);
+        return view('admin.index',compact('futsal','booking','user','latest'));
+    }
+    public function profile()
+    {
+        return view('admin.profile');
+    }
+    public function changeStatus($id,$status){
+        $user = User::findOrFail($id);
+
+        $user->status = $status;
+        $user->save();
+
+        if($user->save()){
+            return redirect('/admin/users',)->with('success', `User $status Successfully.`);
+        }
+        else{
+            return redirect('/admin/users',)->with('error', `Could not $status user.`);
+        }
+    }
 }
 

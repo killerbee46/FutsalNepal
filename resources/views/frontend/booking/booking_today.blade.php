@@ -1,5 +1,9 @@
 @extends('frontend.template')
 
+@section('title')
+    Book | Today
+@endsection
+
 @section('content')
     @if (session('status'))
         <div class="alert alert-success">

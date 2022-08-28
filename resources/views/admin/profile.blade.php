@@ -1,4 +1,4 @@
-@extends('futsal-admin.futsal-admin-master')
+@extends('admin.adminmaster')
 @section('title')
 Profile
 @endsection

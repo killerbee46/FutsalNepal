@@ -17,7 +17,11 @@ class FrontendController extends Controller
     {
         $today = Carbon::now()->format('Y-m-d');
         $futsal = Futsal::all();
-       return view('frontend.index',compact('futsal','today'));
+        $userCount = count(User::all());
+        $futsalCount = count($futsal);
+        $bookingCount = count(Booking::all());
+
+       return view('frontend.index',compact('futsal','today','userCount','futsalCount','bookingCount'));
     }
     public function futsals()
     {
@@ -37,6 +41,10 @@ class FrontendController extends Controller
         $user = User::where('id',$id)->first();
         // dd($user);
         return view('frontend.profile',compact('user'));
+    }
+    public function howItWorks()
+    {
+        return view('frontend.howItWorks');
     }
 
 }

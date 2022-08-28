@@ -1,9 +1,9 @@
 @extends('admin.adminmaster')
-@section('content')
-
 @section('title') Add Futsal
 
 @endsection
+@section('content')
+
 
     @if (session('status'))
     <div class="alert alert-danger">

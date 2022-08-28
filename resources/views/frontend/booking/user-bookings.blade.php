@@ -1,5 +1,8 @@
 @extends('frontend.template')
 
+@section('title')
+My Bookings | Go Futsal
+@endsection
 @section('content')
 
 @if (session('status'))

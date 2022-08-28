@@ -29,7 +29,7 @@ Login to Go Futsal
             <div class="row align-items-md-center py-2">
                 <div class="col">
                     @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900 text-danger" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
@@ -46,12 +46,12 @@ Login to Go Futsal
 
             <div class="row align-items-md-center py-2">
                 <div class="col">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900 text-danger" href="{{ route('register') }}">
                     {{ __('Dont have an account?') }}
                 </a>
                 </div>
                 <div class="col">
-                    <Button class="btn btn-primary">Login</Button>
+                    <Button class="btn btn-success">Login</Button>
                 </div>
             </div>
 

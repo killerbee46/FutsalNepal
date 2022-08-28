@@ -1,13 +1,24 @@
-@extends('futsal-admin.futsal-admin-master')
-@section('title')
-Futsal Dashboard
+@extends('admin.adminmaster')
+@section('title') Admin Dashboard
+
 @endsection
 @section('content')
+
 <div>
 
-<div class="card dash_card">
-    <p class="dash_card_title">Total Bookings</p>
-    <p class="dash_card_number">{{$booking_count}}</p>
+<div class="d-flex justify-content-start">
+    <div class="card dash_card">
+        <p class="dash_card_title">Total Bookings</p>
+        <p class="dash_card_number">{{$booking}}</p>
+    </div>
+    <div class="card dash_card">
+        <p class="dash_card_title">Total Users</p>
+        <p class="dash_card_number">{{$user}}</p>
+    </div>
+    <div class="card dash_card">
+        <p class="dash_card_title">Total Futsals</p>
+        <p class="dash_card_number">{{$futsal}}</p>
+    </div>
 </div>
 
 <hr style="background: white">
@@ -38,4 +49,5 @@ Futsal Dashboard
       </tbody>
   </table>
 </div>
+
 @endsection

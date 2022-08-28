@@ -69,12 +69,12 @@ Register to Go Futsal
         </div>
         <div class="row align-items-md-center py-2">
             <div class="col">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900 text-success" href="{{ route('login') }}">
                     {{ __('Already registered?') }}
                 </a>
             </div>
             <div class="col">
-                <Button class="btn btn-primary">Register</Button>
+                <Button class="btn btn-success">Register</Button>
             </div>
 
 </form>

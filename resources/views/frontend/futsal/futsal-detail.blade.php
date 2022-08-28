@@ -1,5 +1,9 @@
 @extends('frontend.template')
 
+@section('title')
+{{$futsal->name}}
+@endsection
+
 @section('content')
 
 <div class="container">
