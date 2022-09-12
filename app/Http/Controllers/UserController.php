@@ -90,7 +90,7 @@ class UserController extends Controller
             if ($file = $request->file('profile_pic')) {
 
                     $request->validate([
-                        'profile_pic' =>'mimes:jpg,png,bmp',
+                        'profile_pic' =>'mimes:jpg,png,bmp,webp',
                     ]);
                     $image = $request->file('profile_pic');
                     $imgExt = $image->getClientOriginalExtension();

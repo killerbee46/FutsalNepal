@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('status',["pending","approved","blocked","deactive","declined"])->default('pending');
+            $table->enum('status',["pending","approved","blocked","deactivated","declined"])->default('pending');
             $table->integer('role')->default(1);
             $table->string('name');
             $table->string('email')->unique();
@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('profile_pic')->nullable();
-            $table->string('remarks');
+            $table->string('remarks')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -144,7 +144,7 @@
                 <strong>{{Auth::user()->name}}</strong>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="/admin/{{Auth::user()->id}}/profile">Profile</a></li>
+                <li><a class="dropdown-item" href="/admin/profile">Profile</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -155,7 +155,7 @@
         <div class="col p-0">
             <nav class="navbar navbar-dark bg-dark">
                 <div class="container-fluid" style="display: flex;">
-                    <div class="navbar-brand">Hello Peter</div>
+                    <div class="navbar-brand">Dashboard</div>
                     <div>
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false"
@@ -166,7 +166,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
                             style="position: absolute;right: 0; left: auto;">
-                            <li><a class="dropdown-item" href="admin/{{Auth::user()->id}}/profile">Profile</a></li>
+                            <li><a class="dropdown-item" href="/admin/profile">Profile</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
