@@ -23,7 +23,7 @@ class CreateBookingTable extends Migration
             $table->boolean('isBooked')->default(0);
             $table->enum('medium',['system',"call"])->default('system');
             $table->boolean('paid')->default(0);
-            $table->string('remarks');
+            $table->string('remarks')->nullable();
             $table->foreign('futsal_id')->references('id')->on('futsal');
             $table->foreign('booker_id')->references('id')->on('users');
             $table->timestamps();

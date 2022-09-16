@@ -132,6 +132,7 @@ class FutsalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function updateFutsal(Request $request, $id){
+        $futsal = Futsal::where('id', $id)->first();
     if ($file = $request->file('image')) {
         $request->validate([
             'image' =>'mimes:jpg,jpeg,png,bmp'
@@ -141,7 +142,9 @@ class FutsalController extends Controller
         $fullname = time().".".$imgExt;
         $result = $image->storeAs('images/futsals',$fullname);
         }
-
+        else if ($futsal->image) {
+            $fullname = $futsal->image;
+        }
         else{
             $fullname = 'image.png';
         }

@@ -7,7 +7,7 @@
 @section('content')
 
 <div class="container" width='50%' style="margin-top:30px; margin-bottom:40px; ">
-    <form action="/admin/futsal/add-futsal" method="POST" enctype='multipart/form-data'>
+    <form action="/futsal/create-futsal" method="POST" enctype='multipart/form-data'>
         <h3>Add New Futsal</h3>
         <hr width='50%'>
         @csrf

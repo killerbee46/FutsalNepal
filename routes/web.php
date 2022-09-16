@@ -106,3 +106,4 @@ require __DIR__.'/auth.php';
         });
     });
     Route::get('/add-futsal',[FutsalAdminController::class, 'addFutsal']);
+    Route::post('/futsal/create-futsal',[FutsalAdminController::class, 'createFutsal']);

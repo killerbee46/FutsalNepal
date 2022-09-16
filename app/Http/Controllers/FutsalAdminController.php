@@ -157,6 +157,59 @@ class FutsalAdminController extends Controller
         return view('futsal-admin.add-futsal');
     }
 
+    public function createFutsal(Request $request)
+    {
+        //CREATE
+    //    dd($request->all());
+        $request->validate([
+            'name' => 'required',
+            'email'=> 'required',
+            'image'=>'required',
+            'contact'=>'required',
+            'city'=>'required',
+            'price'=>'required',
+            'area'=>'required',
+            'map'=>'required'
+        ]);
+
+        if ($file = $request->file('image')) {
+        $request->validate([
+            'image' =>'mimes:jpg,jpeg,png,bmp'
+        ]);
+        $image = $request->file('image');
+        $imgExt = $image->getClientOriginalExtension();
+        $fullname = time().".".$imgExt;
+        $result = $image->storeAs('images/futsals',$fullname);
+        }
+
+        else{
+            $fullname = 'image.png';
+        }
+
+        $futsals = new Futsal();
+        $futsals->owner_id = auth()->user()->id;
+        $futsals->name= $request->name;
+        $futsals->email = $request->email;
+        $futsals->image = $fullname;
+        $futsals->contact = $request->contact;
+        $futsals->date = $request->date || null;
+        $futsals->price = $request->price;
+        $futsals->city = $request->city;
+        $futsals->area = $request->area;
+        $futsals->map = $request->map;
+        $futsals->save();
+
+
+        if($futsals->save()){
+            //Redirect with Flash message
+            return redirect('/')->with('status', 'Futsal added Successfully!');
+        }
+        else{
+            return redirect('/add-futsal')->with('status', 'There was an error adding futsal!');
+        }
+
+    }
+
     public function futsalAdminBooking(Request $request){
         $request->validate([
             'book_date' => 'required',
