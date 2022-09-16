@@ -16,7 +16,10 @@
         }
 
         .go_navbar {
-            background: #2bae66ff;
+            background: rgb(43, 174, 102);
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         .container.flex {
@@ -268,6 +271,19 @@
     padding: 5px 10px;
     width: fit-content;
 }
+.map-responsive{
+    overflow:hidden;
+    padding-bottom:50%;
+    position:relative;
+    height:0;
+}
+.map-responsive iframe{
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    position:absolute;
+}
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -321,7 +337,7 @@
                     <div class="nav-item dropdown custom">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false" style="position: relative;color: aliceblue;">
-                            <img src="{{ Auth::user()->profile_pic ? asset('/images/users/'.Auth::user()->profile_pic) : asset('/images/default.png')}}"
+                            <img src="{{asset('/images/users/'.Auth::user()->profile_pic)}}"
                                 alt="" width="32" height="32" class="rounded-circle me-2">
                             <strong>{{ Auth::user()->name }}</strong>
                         </a>

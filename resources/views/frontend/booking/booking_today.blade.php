@@ -84,20 +84,6 @@
                                             <button class="btn btn-primary">Confirm</button>
                                         </form>
 
-                                        {{-- ESEWA-FORM  --}}
-{{-- <form action="https://uat.esewa.com.np/epay/main" method="POST">
-    <input value={{$futsal->price}} name="tAmt" type="hidden">
-    <input value={{$futsal->price}} name="amt" type="hidden">
-    <input value="0" name="txAmt" type="hidden">
-    <input value="0" name="psc" type="hidden">
-    <input value="0" name="pdc" type="hidden">
-    <input value="EPAYTEST" name="scd" type="hidden">
-    <input value={{"ee2c3ca1-696b-4cc5-a6be-2c407473478393994$date$time->book_time"}} name="pid" type="hidden">
-    <input value="https://uat-merchant.esewa.com.np/page/esewa_payment_success?q=su" type="hidden" name="su">
-    <input value="https://uat-merchant.esewa.com.np/page/esewa_payment_failed?q=fu" type="hidden" name="fu">
-    <input value="Submit" type="submit">
-    </form> --}}
-
                                     </div>
                                   </div>
                                 </div>
@@ -105,34 +91,10 @@
                         </div>
                     @endforeach
                     <br />
-                    <h3>{{ $booked_time ? 'Booked Sessions' : '' }}</h3>
-                    @foreach ($booked_time as $time)
-                        <div class="col-3">
-                            <form method='post' action="#">
-                                {{-- @csrf
-                            <input name='date' value={{$today}} type="hidden" />
-                            <input name='futsal_id' value={{$futsal->id}} type="hidden" />
-                            <input name='booker_id' value={{Auth::user()->id}} type="hidden" />
-                            <input name='time' value={{$time->time}} type="hidden" />
-                            <input name='isBooked' value={{1}} type="hidden" /> --}}
-                                {{-- <input name='startTime' value="{{$i}}:00" type="hidden" />
-                            <input name='endTime' value="{{$i+1}}:00" type="hidden" /> --}}
-                                <button disabled class="btn" style="width: 100%">
-                                    <div class="card" style="color:white;background:red">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title">{{ $time->book_time }}</h5>
-                                            <p>Booked</p>
-                                        </div>
-                                    </div>
-                                </button>
-
-                            </form>
-                        </div>
-                    @endforeach
                 </div>
 
                 <h3>{{ $my_booking ? 'My Bookings' : '' }}</h3>
-                    @foreach ($booked_time as $time)
+                    @foreach ($my_booking as $booked)
                         <div class="col-3">
 
                                 {{-- @csrf
@@ -146,7 +108,7 @@
                                 <button class="btn" style="width: 100%"  data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                     <div class="card" style="color:white;background:red">
                                         <div class="card-body text-center">
-                                            <h5 class="card-title">{{ $time->book_time }}</h5>
+                                            <h5 class="card-title">{{ $booked->book_time }}</h5>
                                         </div>
                                     </div>
                                 </button>
@@ -172,7 +134,7 @@
                                                 <input name='time' value={{ $time->time }} type="hidden" />
                                                 <button class="btn btn-primary">Confirm</button>
                                             </form> --}}
-                                            <form method='post' action="/cancel-booking">
+                                            <form method='post' action="/cancel-booking/{{$booked->id}}">
                                                 @csrf
                                                 <button class="btn btn-danger">Confirm</button>
                                             </form>

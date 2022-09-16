@@ -146,12 +146,12 @@ class FutsalController extends Controller
             $fullname = $futsal->image;
         }
         else{
-            $fullname = 'image.png';
+            $fullname = $futsal->image;
         }
         //Update
         $futsals = Futsal::find($id)->first();
 
-        $futsals->owner_id = $request->owner_id;
+        $futsals->owner_id = $futsal->owner_id;
         $futsals->name= $request->name;
         $futsals->email = $request->email;
         $futsals->image = $fullname;
@@ -187,5 +187,11 @@ class FutsalController extends Controller
         else return redirect('/admin/futsal')->with('status', 'There was an error');
 
 
+    }
+    public function searchFutsalForAdmin(Request $request){
+
+        $searched=$request->searched;
+        $data= Futsal::orWhere('name','Like',"%$searched%")->orWhere('email','Like',"%$searched%")->get();
+        return view('admin.futsals.searchfutsalview',compact('data','searched'));
     }
 }

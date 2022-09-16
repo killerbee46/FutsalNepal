@@ -120,7 +120,7 @@ Booking - Day after
                                     <div class="modal-dialog">
                                       <div class="modal-content">
                                         <div class="modal-header">
-                                          <h5 class="modal-title" id="cancelLabel">Confirm Booking?</h5>
+                                          <h5 class="modal-title" id="cancelLabel">Confirm Cancel?</h5>
                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <form method='post' action="/cancel-booking">

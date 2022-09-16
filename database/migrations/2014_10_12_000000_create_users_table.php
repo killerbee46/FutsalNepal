@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('mobile')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->integer('penalty')->default(0);
             $table->string('profile_pic')->nullable();
             $table->string('remarks')->nullable();
             $table->rememberToken();

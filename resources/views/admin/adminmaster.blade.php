@@ -120,13 +120,21 @@
                     </a>
                 </li>
                 <li>
+                    <a href="/admin/penalty" class="nav-link text-white">
+                        <svg class="bi me-2" width="16" height="16">
+                            <use xlink:href="#table"></use>
+                        </svg>
+                        Pending Penalties
+                    </a>
+                </li>
+                {{-- <li>
                     <a href="/admin/time" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16">
                             <use xlink:href="#grid"></use>
                         </svg>
                         Time
                     </a>
-                </li>
+                </li> --}}
                 <li>
                     <a href="/admin/profile" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16">

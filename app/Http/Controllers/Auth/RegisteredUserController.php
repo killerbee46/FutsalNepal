@@ -37,14 +37,30 @@ class RegisteredUserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
             'role'=>'required| int',
+            'profile_pic'=>'string'
         ]);
+        if ($file = $request->hasFile('profile_pic')) {
+
+            $request->validate([
+                'profile_pic' =>'mimes:jpg,png,bmp,webp',
+            ]);
+            $image = $request->file('profile_pic');
+            $imgExt = $image->getClientOriginalExtension();
+            $fullname = time().".".$imgExt;
+            $result = $image->storeAs('images/users',$fullname);
+
+    }
+    else{
+        $fullname = "default.png";
+    }
 
         Auth::login($user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'mobile'=>$request->mobile,
-            'role'=>$request->role
+            'role'=>$request->role,
+            'profile_pic'=>$fullname
         ]));
         event(new Registered($user));
 

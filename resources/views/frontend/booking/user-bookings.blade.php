@@ -35,7 +35,7 @@ My Bookings | Go Futsal
             <td>{{$booking->futsal_id}}</td>
             <td>{{$booking->book_time}}</td>
             <td>{{$booking->isBooked === 1 ? "Booked" : "Cancelled"}}</td>
-            <td>{{$booking->penalty === 0 ? "N/A" : `Rs. $booking->penalty`}}</td>
+            <td>{{$booking->penalty}}</td>
           </tr>
 
 @endforeach

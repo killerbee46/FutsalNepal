@@ -10,8 +10,21 @@
         {{ session('status') }}
     </div>
 @endif
+<form style="float: right;" method="POST"
+action="{{url('admin/futsal/search-futsal')}}" >
+    @csrf
+        <input class="input is-normal" type="text" placeholder="Search..." style="width: 300px; " name="searched">
+        <button class="btn btn-primary" >Search</button>
 
-<table class='table table-shaded' style="width:90%;margin:auto">
+</form>
+<div class="buttons" style="float: right;">
+
+  <a href="{{url('admin/futsal/create')}}" class="button is-primary">Add Futsal</a>
+
+</div>
+<h2>List of Futsals</h2>
+
+<table class='table table-striped'>
 <tr>
     <th>Name</th>
     <th>Email</th>
@@ -37,6 +50,5 @@
 @endforeach
 
 </table>
-<a href="futsal/create" class="btn btn-success" style="margin-left:5%;margin-top:5px;" >Add New Futsal</a>
 
 @endsection

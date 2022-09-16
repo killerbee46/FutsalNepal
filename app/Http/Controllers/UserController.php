@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Futsal;
 use App\Models\Booking;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
@@ -49,6 +50,21 @@ class UserController extends Controller
             'email' => 'required',
         ]);
 
+        if ($file = $request->file('profile_pic')) {
+
+            $request->validate([
+                'profile_pic' =>'mimes:jpg,png,bmp,webp',
+            ]);
+            $image = $request->file('profile_pic');
+            $imgExt = $image->getClientOriginalExtension();
+            $fullname = time().".".$imgExt;
+            $result = $image->storeAs('images/users',$fullname);
+
+    }
+    else{
+        $fullname = "default.png";
+    }
+
 
         $extUser = null;
         $extuser = User::where('email', $request->email)->first();
@@ -61,11 +77,8 @@ class UserController extends Controller
                 $user->mobile = $request->mobile;
                 $user->role = $request->role;
                 $user->status = $request->status;
+                $user->profile_pic = $fullname;
                 $user->password = Hash::make(12345678);
-
-                if ($request->hasFile('profile_pic')) {
-                    dd('here');
-                }
 
             }
             else{
@@ -83,24 +96,9 @@ class UserController extends Controller
             $user->email = $request->email;
             $user->mobile = $request->mobile;
             $user->role = $request->role;
-            $user->status = $request->status;
+            $user->profile_pic = $fullname;
 
             $user->password = Hash::make(12345678);
-
-            if ($file = $request->file('profile_pic')) {
-
-                    $request->validate([
-                        'profile_pic' =>'mimes:jpg,png,bmp,webp',
-                    ]);
-                    $image = $request->file('profile_pic');
-                    $imgExt = $image->getClientOriginalExtension();
-                    $fullname = time().".".$imgExt;
-                    $result = $image->storeAs('images/users',$fullname);
-
-            }
-            else{
-                $fullname = "default.png";
-            }
 
             $user->profile_pic = $fullname;
 
@@ -130,6 +128,21 @@ class UserController extends Controller
             'email' => 'required',
         ]
         );
+        $users = User::where('id', $id)->first();
+        if ($file = $request->file('profile_pic')) {
+
+            $request->validate([
+                'profile_pic' =>'mimes:jpg,png,bmp,webp',
+            ]);
+            $image = $request->file('profile_pic');
+            $imgExt = $image->getClientOriginalExtension();
+            $fullname = time().".".$imgExt;
+            $result = $image->storeAs('images/users',$fullname);
+
+    }
+    else{
+        $fullname = $users->profile_pic;
+    }
 
         $user = User::findOrFail($id);
         $user->name = $request->name;
@@ -137,6 +150,8 @@ class UserController extends Controller
         $user->mobile = $request->mobile;
         $user->role = $request->role;
         $user->status = $request->status;
+        $user->profile_pic = $fullname;
+        $user->status = $users->status;
 
         if ($user->save()) {
 
@@ -189,6 +204,29 @@ class UserController extends Controller
         }
         else{
             return redirect('/admin/users',)->with('error', `Could not $status user.`);
+        }
+    }
+    public function penalty()
+    {
+        $users = DB::select('select * from users where penalty > ?', [0]);
+        return view('admin.penalty',compact('users'));
+    }
+    public function penaltyClear(Request $request,$id)
+    {
+        $user = User::findorfail($id);
+
+        $user->penalty = $user->penalty - $request->paidAmount;
+        if($user->penalty <= 0){
+            $user->status = "approved";
+        }
+        else{
+            $user->status = $user->status;
+        }
+        if ($user->save()) {
+            return redirect('admin/penalty')->with('status', "Entered amount has been deducted from user's penalty");
+        }
+        else{
+            return redirect('admin/penalty')->with('status', "Could not carry out transaction");
         }
     }
 }

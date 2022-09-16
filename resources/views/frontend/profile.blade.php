@@ -41,10 +41,10 @@ Profile
                                 <label class="small mb-1" for="inputEmailAddress">Email address</label>
                                 <input class="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" value={{$user->email}}>
                             </div>
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <label class="small mb-1" for="inputLocation">Location</label>
                                 <input class="form-control" id="inputLocation" type="text" placeholder="Enter your location" value="San Francisco, CA">
-                            </div>
+                            </div> --}}
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputPhone">Phone number</label>
                                 <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value={{$user->phone}}>

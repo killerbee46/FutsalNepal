@@ -65,10 +65,12 @@
                 <x-label for="profile_pic" :value="__('Profile Picture')" />
             </div>
             <div class="col-md-8">
-                <div class="custom-file">
-                    <x-input style="background: transparent; box-shadow: none" id="profile_pic" class="block mt-1 w-full"
-                        type="file" name="profile_pic" />
-                </div>
+                <div class="input-group">
+                    <div class="custom-file">
+                      <input style="background: transparent; box-shadow: none;margin-left:30px" type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" name="profile_pic"  value="{{old('profile_pic')}}">
+                      {{-- <label class="custom-file-label custom-file" for="inputGroupFile04">Choose file</label> --}}
+                    </div>
+                  </div>
             </div>
         </div>
 

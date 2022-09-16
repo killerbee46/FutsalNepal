@@ -88,34 +88,10 @@
                         </div>
                     @endforeach
                     <br />
-                    <h3>{{ $booked_time ? 'Booked Sessions' : '' }}</h3>
-                    @foreach ($booked_time as $time)
-                        <div class="col-3">
-                            <form method='post' action="#">
-                                {{-- @csrf
-                            <input name='date' value={{$today}} type="hidden" />
-                            <input name='futsal_id' value={{$futsal->id}} type="hidden" />
-                            <input name='booker_id' value={{Auth::user()->id}} type="hidden" />
-                            <input name='time' value={{$time->time}} type="hidden" />
-                            <input name='isBooked' value={{1}} type="hidden" /> --}}
-                                {{-- <input name='startTime' value="{{$i}}:00" type="hidden" />
-                            <input name='endTime' value="{{$i+1}}:00" type="hidden" /> --}}
-                                <button disabled class="btn" style="width: 100%">
-                                    <div class="card" style="color:white;background:red">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title">{{ $time->book_time }}</h5>
-                                            <p>Booked</p>
-                                        </div>
-                                    </div>
-                                </button>
-
-                            </form>
-                        </div>
-                    @endforeach
 
                     <br />
                     <h3>{{ $my_booking ? 'My Bookings' : '' }}</h3>
-                    @foreach ($booked_time as $time)
+                    @foreach ($my_booking as $booked)
                         <div class="col-3">
 
                                 {{-- @csrf
@@ -129,7 +105,7 @@
                                 <button class="btn" style="width: 100%"  data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                     <div class="card" style="color:white;background:red">
                                         <div class="card-body text-center">
-                                            <h5 class="card-title">{{ $time->book_time }}</h5>
+                                            <h5 class="card-title">{{ $booked->book_time }}</h5>
                                             <p>Booked</p>
                                         </div>
                                     </div>
@@ -156,7 +132,7 @@
                                                 <input name='time' value={{ $time->time }} type="hidden" />
                                                 <button class="btn btn-primary">Confirm</button>
                                             </form> --}}
-                                            <form method='post' action="/cancel-booking">
+                                            <form method='post' action="/cancel-booking/{{$booked->id}}">
                                                 @csrf
                                                 <button class="btn btn-danger">Confirm</button>
                                             </form>

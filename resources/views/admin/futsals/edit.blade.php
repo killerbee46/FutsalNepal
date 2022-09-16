@@ -60,6 +60,7 @@
             <input type="text" name="map" style="width: 500px;height: auto;" value="{{$futsals->map}}">
             <div class="custom-file">
                 <h5>Photo</h5>
+                <img width="200" height="200" src={{asset('/images/futsals/'.$futsals->image)}} />
                 <input type="file" class="custom-file-input" id="inputGroupFile04"
                     aria-describedby="inputGroupFileAddon04" name="photo">
             </div>

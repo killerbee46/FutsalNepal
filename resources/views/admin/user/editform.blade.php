@@ -14,7 +14,7 @@
     @endif
 
   <form method="POST"
-action="{{url('admin/users/edit-user/'.$user->id)}}">
+action="{{url('admin/users/edit-user/'.$user->id)}}" enctype='multipart/form-data'>
           @csrf
           <div class="field">
         <label class="label">Name</label>
@@ -46,12 +46,14 @@ action="{{url('admin/users/edit-user/'.$user->id)}}">
 
   <div class="input-group">
   <div class="custom-file">
+    <label class="label">Profile Picture</label>
+    <img width="200" height="200" src={{asset('/images/users/'.$user->profile_pic)}} />
     <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" name="profile_pic">
     <label class="custom-file-label custom-file" for="inputGroupFile04">Choose file</label>
   </div>
 </div>
 
-      <div class="field">
+      {{-- <div class="field">
         <label class="label">Status:</label>
         <div class="control">
           <div class="select">
@@ -70,7 +72,7 @@ action="{{url('admin/users/edit-user/'.$user->id)}}">
             </select>
           </div>
         </div>
-      </div>
+      </div> --}}
 
 
       <div class="field">

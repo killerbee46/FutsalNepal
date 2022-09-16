@@ -6,6 +6,12 @@
 
 @section('content')
 
+@if (session('error'))
+            <div class="alert alert-danger" style="position: absolute; top:70px;left:0;right:0;text-align: center;z-index:5">
+                {{ session('error') }}
+            </div>
+        @endif
+
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" style="position: relative">
     <div class="carousel-inner">
         <div class="carousel-item cover-slider active">

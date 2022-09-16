@@ -65,5 +65,14 @@ class User extends Authenticatable
             return false;
         }
     }
+    public function isApproved()
+    {
+        if (Auth::user()->status == 'approved') {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
 }
