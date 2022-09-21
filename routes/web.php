@@ -105,7 +105,7 @@ require __DIR__.'/auth.php';
             Route::get('/day-after',[FutsalAdminController::class, 'bookingAfter']);
             Route::get('/all',[FutsalAdminController::class, 'allBookings']);
             Route::get('/cancelled',[FutsalAdminController::class, 'cancelledBookings']);
-            Route::post('/cancel-booking/{id}',[FutsalAdminController::class, 'cancelBooking']);
+            Route::post('/cancel-booking',[FutsalAdminController::class, 'cancelBooking']);
             Route::post('/bookFutsal',[FutsalAdminController::class, 'futsalBooking']);
         });
     });

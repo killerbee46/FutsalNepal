@@ -43,21 +43,21 @@ class FutsalAdminController extends Controller
     {
         $futsal = Futsal::where('owner_id', Auth::user()->id)->first();
         $users = User::orderBy('name')->get();
-        $date = Carbon::now()->format('Y-m-d');
+        $date = Carbon::now()->addDay()->format('Y-m-d');
         // $today->setTimezone('Asia/Kathmandu');
         $time = DB::select('SELECT * FROM times WHERE book_time NOT IN ( SELECT book_time from booking where isBooked = 1 AND book_date = ? AND futsal_id = ? )',[$date,$futsal->id]);
-        $booked_time = DB::select('SELECT * FROM booking where isBooked = 1 AND book_date = ? AND futsal_id = ?',[$date,$futsal->id]);
-        return view('futsal-admin.booking_tomorrow',compact('futsal','time', 'date','booked_time','users'));
+        $bookings = DB::select('SELECT * FROM booking where isBooked = 1 AND book_date = ? AND futsal_id = ?',[$date,$futsal->id]);
+        return view('futsal-admin.booking_tomorrow',compact('futsal','time', 'date','bookings','users'));
     }
     public function bookingAfter()
     {
         $futsal = Futsal::where('owner_id', Auth::user()->id)->first();
         $users = User::orderBy('name')->get();
-        $date = Carbon::now()->format('Y-m-d');
+        $date = Carbon::now()->addDays(2)->format('Y-m-d');
         // $today->setTimezone('Asia/Kathmandu');
         $time = DB::select('SELECT * FROM times WHERE book_time NOT IN ( SELECT book_time from booking where isBooked = 1 AND book_date = ? AND futsal_id = ? )',[$date,$futsal->id]);
-        $booked_time = DB::select('SELECT * FROM booking where isBooked = 1 AND book_date = ? AND futsal_id = ?',[$date,$futsal->id]);
-        return view('futsal-admin.booking_after',compact('futsal','time', 'date','booked_time','users'));
+        $bookings = DB::select('SELECT * FROM booking where isBooked = 1 AND book_date = ? AND futsal_id = ?',[$date,$futsal->id]);
+        return view('futsal-admin.booking_after',compact('futsal','time', 'date','bookings','users'));
     }
 
     public function futsalBooking(Request $request){
@@ -92,11 +92,10 @@ class FutsalAdminController extends Controller
         }
     }
 
-    public function cancelBooking(Request $request,$id){
-        dd($id);
+    public function cancelBooking(Request $request){
         $futsal = Futsal::where('owner_id',auth()->user()->id)->first();
-        $booking = Booking::where('futsal_id',$futsal->id)->findOrFail($id);
-        $user = User::findOrFail($request->booker_id);
+        $booking = Booking::where('futsal_id',$futsal->id)->findOrFail($request->booking_id);
+        $user = User::findOrFail($booking->booker_id);
         $penalty = (20/100)*$futsal->price;
         $booking->penalty = $penalty;
 

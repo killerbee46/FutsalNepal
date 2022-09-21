@@ -39,7 +39,7 @@ Booking - Tomorrow
                 <div class="row gy-4 my-4">
                     @foreach ($time as $time)
                         <div class="col-3">
-                            <button class="btn" style="width: 100%" data-bs-toggle="modal" data-bs-target="#confirm-modal">
+                            <button onclick="modalValue({{strval($time->id)}})" class="btn" style="width: 100%" data-bs-toggle="modal" data-bs-target="#confirm-modal">
                                 <div class="card" style="color:white;background:#2bae66ff">
                                     <div class="card-body text-center">
                                         <h5 class="card-title">{{ $time->book_time }}</h5>
@@ -70,7 +70,7 @@ Booking - Tomorrow
                                                     <option value={{$user->id}}>{{$user->name}}</option>
                                                 @endforeach
                                             </select>
-                                            <input name='book_time' value={{ $time->book_time }} type="hidden" />
+                                            <input name='time_id' id="time" type="hidden" />
                                             <input name='isBooked' value={{ 1 }} type="hidden" />
                                         </div>
                                     <div class="modal-footer">
@@ -96,8 +96,8 @@ Booking - Tomorrow
                         </div>
                     @endforeach
                     <br />
-                    <h3>{{ $booked_time ? 'Booked Sessions' : '' }}</h3>
-                    @foreach ($booked_time as $time)
+                    <h3>{{ $bookings ? 'Booked Sessions' : '' }}</h3>
+                    @foreach ($bookings as $booked)
                         <div class="col-3">
 
                                 {{-- @csrf
@@ -108,10 +108,10 @@ Booking - Tomorrow
                             <input name='isBooked' value={{1}} type="hidden" /> --}}
                                 {{-- <input name='startTime' value="{{$i}}:00" type="hidden" />
                             <input name='endTime' value="{{$i+1}}:00" type="hidden" /> --}}
-                                <button class="btn" style="width: 100%"  data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                <button onclick="cancelId({{$booked->id}})" class="btn" style="width: 100%"  data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                     <div class="card" style="color:white;background:red">
                                         <div class="card-body text-center">
-                                            <h5 class="card-title">{{ $time->book_time }}</h5>
+                                            <h5 class="card-title">{{ $booked->book_time }}</h5>
                                             <p>Booked</p>
                                         </div>
                                     </div>
@@ -138,6 +138,7 @@ Booking - Tomorrow
                                                 <input name='time' value={{ $time->time }} type="hidden" />
                                                 <button class="btn btn-primary">Confirm</button>
                                             </form> --}}
+                                            <input type="hidden" id="cancel-id" name="booking_id" />
                                                 <button type="submit" class="btn btn-danger">Confirm</button>
                                             </form>
 

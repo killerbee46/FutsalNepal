@@ -12,14 +12,6 @@ Booking - Today
     @endif
 
     <div class="container">
-        <script>
-            function modalValue(time) {
-                document.getElementById('time').value = time
-            }
-            function cancelId(id) {
-                document.getElementById('cancel-id').value = id
-            }
-        </script>
 
         <ul class="nav nav-tabs d-flex justify-content-center my-4" id="myTab" role="tablist">
             <a class="tab_link" href="/futsal-admin/bookings">
@@ -145,6 +137,7 @@ Booking - Today
                                                 <input name='time' value={{ $time->time }} type="hidden" />
                                                 <button class="btn btn-primary">Confirm</button>
                                             </form> --}}
+                                            <input type="hidden" id="cancel-id" name="booking_id" />
                                                 <button type="submit" class="btn btn-danger">Confirm</button>
                                             </form>
 
