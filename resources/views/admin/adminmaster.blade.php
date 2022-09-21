@@ -183,7 +183,7 @@
                     </div>
                 </div>
             </nav>
-            <div class="p-3">
+            <div class="p-3" style="height: 88vh;overflow-y: scroll">
                 @yield('content')
             </div>
         </div>

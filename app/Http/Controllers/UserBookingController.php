@@ -55,17 +55,20 @@ else{
     }
 
     public function futsalBooking(Request $request){
+        $time = Time::where('id',$request->time_id)->first();
         $request->validate([
             'book_date' => 'required',
             'futsal_id' => 'required',
-            'book_time'=> 'required',
+            'time_id'=> 'required',
             'isBooked' => 'required'
         ]);
+        $futsal = Futsal::findorfail($request->futsal_id);
         $booking = new Booking();
         $booking->futsal_id = $request->futsal_id;
         $booking->booker_id = Auth::user()->id;
         $booking->book_date = $request->book_date;
-        $booking->book_time = $request->book_time;
+        $booking->price = $futsal->price;
+        $booking->book_time = $time->book_time;
         $booking->isbooked = 1;
         $booking->save();
 
@@ -78,8 +81,8 @@ else{
         }
     }
 
-    public function cancelBooking(Request $request,$id){
-        $booking = Booking::findOrFail($id);
+    public function cancelBooking(Request $request){
+        $booking = Booking::findOrFail($request->booking_id);
         $user = User::findOrFail($booking->booker_id);
         $futsal = Futsal::findOrFail($booking->futsal_id);
         $penalty = (20/100)*$futsal->price;
@@ -88,7 +91,7 @@ else{
         $booking->isBooked = 0;
         $user->penalty = $user->penalty + $penalty;
 
-        if($user->penalty >= $futsal->price) {
+        if($user->penalty > 999) {
             $user->status = "deactivated";
         }
         else{
@@ -102,6 +105,8 @@ else{
         else{
             return redirect("/futsals/$booking->futsal_id/book-today")->with('status', 'Could not cancel booking at the moment!');
         }
+
+
     }
 
     public function userBooking(){

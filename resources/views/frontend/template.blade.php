@@ -284,6 +284,9 @@
     width:100%;
     position:absolute;
 }
+.dropdown-toggle::after{
+content: none !important;
+}
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -332,6 +335,25 @@
                     aria-label="Search">
                 <button class="btn btn__primary__outlined" type="submit">Search</button>
             </form>
+            {{-- <div>
+            <div class="nav-item dropdown custom">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false" style="border-radius:50%; padding:10px 15px; overflow:hidden;">
+
+                    <div>
+                        <img width="20" src="{{ asset('/images/notification-icon.webp') }}">
+                        <span class="position-absolute top-10 start-20 translate-middle p-1 bg-danger border border-light rounded-circle">
+                            <span class="visually-hidden">New alerts</span>
+                          </span>
+                    </div>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"
+                    style="position: absolute;right: 0; left: auto;">
+                    <li><a class="dropdown-item">You have been de-activated due to pending penalty</a></li>
+                    <li><a class="dropdown-item">Successfully Registered</a></li>
+                </ul>
+            </div>
+        </div> --}}
             @if (Route::has('login'))
                 @auth
                     <div class="nav-item dropdown custom">

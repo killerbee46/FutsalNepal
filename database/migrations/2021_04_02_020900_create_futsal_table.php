@@ -21,6 +21,7 @@ class CreateFutsalTable extends Migration
             $table->string('date');
             $table->string('contact');
             $table->string('email');
+            $table->boolean('isFeatured')->default(false);
             $table->string('city');
             $table->string('area');
             $table->string('map');

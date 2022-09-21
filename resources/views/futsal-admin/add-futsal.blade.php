@@ -12,6 +12,7 @@
         <hr width='50%'>
         @csrf
         <div align='left'>
+
             <h5>Name</h5>
             <input type="text" name="name" style="width: 50%;height: auto;" value="{{old('name')}}"><br>
             @error('name')
@@ -50,7 +51,7 @@
                 </div>
             </div>
             <h5>Map</h5>
-            <input type="text" name="map" style="width: 50%;height: auto;" value="{{old('city')}}">
+            <input type="text" name="map" style="width: 50%;height: auto;" value="{{old('map')}}">
             <div class="custom-file">
                 <h5>Photo</h5>
                 <input type="file" class="custom-file-input" id="inputGroupFile04"

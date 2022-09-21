@@ -4,7 +4,8 @@ All Bookings
 @endsection
 @section('content')
 <div>
-<table class="table">
+    <h3>Booking List</h3>
+<table class="table table-striped css-serial">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -18,11 +19,11 @@ All Bookings
         @foreach ($booking_list as $booking )
 
         <tr>
-            <th scope="row">{{$booking->id}}</th>
+            <td></td>
             <td>{{$booking->book_date}}</td>
             <td>{{$booking->book_time}}</td>
             <td>{{$booking->isBooked === 1 ? "Booked" : "Cancelled"}}</td>
-            <td>{{$booking->penalty === 0 ? "N/A" : `Rs. $booking->penalty`}}</td>
+            <td>{{$booking->penalty}}</td>
           </tr>
 
 @endforeach

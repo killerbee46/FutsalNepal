@@ -20,8 +20,48 @@ class FrontendController extends Controller
         $userCount = count(User::all());
         $futsalCount = count($futsal);
         $bookingCount = count(Booking::all());
+        $avg = 0;
 
-       return view('frontend.index',compact('futsal','today','userCount','futsalCount','bookingCount'));
+        if (auth()->check()) {
+
+            $bookings = Booking::where('booker_id',auth()->user()->id)->get();
+            $total_booking = count($bookings);
+            $total_price = 0;
+            foreach ($bookings as $book) {
+                $total_price = $total_price + $book->price;
+
+            }
+            if($total_booking !=0){
+                $avg = $total_price / $total_booking ;
+            }
+            else{
+                $avg = 0;
+            }
+            if ($avg >= 500 && $avg <= 1000 ) {
+                $high = 1000;
+                $low = 500;
+            }
+            else if ($avg >= 1000 && $avg <= 1500 ) {
+                $high = 1500;
+                $low = 1000;
+            }
+            else if ($avg >= 1500 && $avg <= 2000 ) {
+                $high = 2000;
+                $low = 1500;
+            }
+            else{
+                $high = 3000;
+                $low = 0;
+            }
+
+
+            $recommender = Futsal::where('price','<=',$high)->where('price','>=',$low)->get();
+        }
+        else{
+            $recommender = [];
+        }
+
+       return view('frontend.index',compact('futsal','today','userCount','futsalCount','bookingCount','recommender'));
     }
     public function futsals()
     {

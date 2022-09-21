@@ -57,15 +57,15 @@ Booking - Day after
                                     </div>
 
 
-                                    <form method='post' action="/book-futsal">
+                                    <form method='post' action="/futsal-admin/bookings/bookFutsal">
                                         @csrf
                                         <div class="modal-body">
 
 
                                         <input name='book_date' value={{ $date }} type="hidden" />
                                             <input name='futsal_id' value={{ $futsal->id }} type="hidden" />
-                                            User: <select class="form-select" name="booker_id">
-                                                <option>Select a user</option>
+                                            User: <select required class="form-select" name="booker_id">
+                                                <option value="">Select a user</option>
                                                 @foreach ($users as $user)
                                                     <option value={{$user->id}}>{{$user->name}}</option>
                                                 @endforeach
@@ -123,7 +123,7 @@ Booking - Day after
                                           <h5 class="modal-title" id="cancelLabel">Confirm Cancel?</h5>
                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form method='post' action="/cancel-booking">
+                                        <form method='post' action="/futsal-admin/bookings/cancel-booking/{{$time->id}}">
                                             @csrf
                                         <div class="modal-body">
                                           Remarks: <textarea class="form-input col-12" name='remarks' placeholder="Enter a remark..." ></textarea>

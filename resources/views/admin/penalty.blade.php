@@ -30,9 +30,16 @@ Pending Penalties
         <td><button class='btn btn-danger'>Clear</button></td>
         </form> --}}
 
-        <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+        <td><button onclick="penaltyValue({{$user->id,$user->penalty}})" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#cancel-modal">
             Clear
         </button></td>
+
+        <script>
+function penaltyValue(userId,penalty) {
+    document.getElementById('userId').value = userId
+    document.getElementById('penalty').value = penalty
+}
+            </script>
         <div class="modal fade" id="cancel-modal" tabindex="-1" aria-labelledby="cancelLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -40,10 +47,11 @@ Pending Penalties
                   <h5 class="modal-title" id="cancelLabel">Clear Penalty</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method='post' action="/admin/penalty-clear/{{$user->id}}">
+                <form method='post' action="/admin/penalty-clear">
                     @csrf
                 <div class="modal-body">
-                    Penalty Pending :<span class="text text-danger"> {{$user->penalty}}</span><br /><br />
+                    Penalty Pending :<span id="penalty" class="text text-danger"> </span><br /><br />
+                    <input name="userId" id="userId" type="hidden" />
                   <label>Amount Paid: </label> <input type="number" min="0" class="form-input col-12" name='paidAmount' placeholder="Enter Amount" >
                 </div>
                 <div class="modal-footer">

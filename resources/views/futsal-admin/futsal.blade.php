@@ -17,6 +17,9 @@ Futsal Details
             @error('contact')
             <div class="alert alert-danger">Please add a contact number</div>
             @enderror
+            <h3>Futsal Information
+                <hr />
+            </h3>
             <div align='left'>
             <h5>Name</h5>
             <input type="text" name="name" style="width: 500px;height: auto;" value="{{$futsals->name}}"><br>
@@ -46,6 +49,7 @@ Futsal Details
             <input type="text" name="map" style="width: 500px;height: auto;" value="{{$futsals->map}}">
             <div class="custom-file">
                 <h5>Photo</h5>
+                <img width="250" height="200" src={{asset('/images/futsals/'.$futsals->image)}} />
                 <input type="file" class="custom-file-input" id="inputGroupFile04"
                     aria-describedby="inputGroupFileAddon04" name="photo">
             </div>

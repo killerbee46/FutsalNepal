@@ -37,8 +37,12 @@ class RegisteredUserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
             'role'=>'required| int',
-            'profile_pic'=>'string'
+            'profile_pic'=>'string',
+            'lat'=>'',
+            'lang'=>'',
+
         ]);
+        dd($request);
         if ($file = $request->hasFile('profile_pic')) {
 
             $request->validate([

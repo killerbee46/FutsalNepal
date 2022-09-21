@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Futsal;
+use App\Models\User;
 use Carbon\Carbon;
 
 class FutsalController extends Controller
@@ -31,8 +32,9 @@ class FutsalController extends Controller
      */
     public function create()
     {
+        $users = User::where('role',2)->get();
         //CREATE
-        return view('admin.futsals.create');
+        return view('admin.futsals.create',compact('users'));
 
     }
 

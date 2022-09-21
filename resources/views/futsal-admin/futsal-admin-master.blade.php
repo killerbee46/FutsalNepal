@@ -52,6 +52,14 @@
             font-size: 30px;
             font-weight: 600;
         }
+        .css-serial {
+        counter-reset: serial-number;
+      }
+
+      .css-serial td:first-child:before {
+        counter-increment: serial-number;
+        content: counter(serial-number);
+      }
 </style>
 
 </head>
@@ -193,7 +201,7 @@
                     </div>
                 </div>
             </nav>
-            <div class="p-3">
+            <div class="p-3" style="height: 88vh;overflow-y: scroll">
                 @yield('content')
             </div>
         </div>

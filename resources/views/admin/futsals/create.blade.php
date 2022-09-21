@@ -17,6 +17,13 @@
             <hr width='50%'>
             @csrf
             <div align='left'>
+                <h5>Owner Id</h5>
+                <select required class="form-select" name="owner_id">
+                   <option value="">Select owner</option>
+                   @foreach ($users as $user)
+                       <option value={{$user->id}}>{{$user->name}}</option>
+                   @endforeach
+               </select>
                 <h5>Name</h5>
                 <input type="text" name="name" style="width: 50%;height: auto;" value="{{old('name')}}"><br>
                 @error('name')

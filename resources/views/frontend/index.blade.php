@@ -12,6 +12,8 @@
             </div>
         @endif
 
+
+
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" style="position: relative">
     <div class="carousel-inner">
         <div class="carousel-item cover-slider active">
@@ -57,6 +59,30 @@
         </div>
     </div>
 </div>
+
+{{-- Unique Id Generator --}}
+{{-- @php
+    $data = uniqId();
+    echo $data;
+@endphp --}}
+
+@if (count($recommender)!==0)
+<div class="container py-5">
+    <h3 class="py-2">Recommended Futsals</h3>
+    <div class="row  py-5 justify-content-evenly">
+@foreach ($recommender as $data )
+<div class="profile-card-2 col-3"><img src="{{asset('/images/futsals/'.$data->image)}}" class="img">
+    <div class="profile-name">{{ $data->name }}</div>
+    <div class="profile-username">{{$data->area}}, {{$data->city}}</div>
+    <div class="profile-button-1">
+        <a href="/futsals/{{$data->id}}" class="btn book__button">Details</a>
+        <a href="/futsals/{{$data->id}}/book-today" class="btn book__button">Book Now</a>
+    </div>
+</div>
+@endforeach
+    </div>
+
+@endif
 
 
 {{-- ESEWA-FORM  --}}

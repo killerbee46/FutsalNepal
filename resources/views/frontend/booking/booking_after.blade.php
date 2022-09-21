@@ -13,6 +13,15 @@
 
     <div class="container py-5">
 
+        <script>
+            function modalValue(time) {
+                document.getElementById('time').value = time
+            }
+            function cancelId(id) {
+                document.getElementById('cancel-id').value = id
+            }
+        </script>
+
         <h3><a href="/futsals/{{ $futsal->id }}" style="text-decoration: none;color:#2bae66ff;">{{$futsal->name}}</a></h3>
 
         <ul class="nav nav-tabs d-flex justify-content-center my-4" id="myTab" role="tablist">
@@ -41,7 +50,7 @@
                 <div class="row gy-4 my-4">
                     @foreach ($time as $time)
                         <div class="col-3">
-                            <button class="btn" style="width: 100%" data-bs-toggle="modal" data-bs-target="#confirm-modal">
+                            <button class="btn" onclick="modalValue({{strval($time->id)}})" style="width: 100%" data-bs-toggle="modal" data-bs-target="#confirm-modal">
                                 <div class="card" style="color:white;background:#2bae66ff">
                                     <div class="card-body text-center">
                                         <h5 class="card-title">{{ $time->book_time }}</h5>
@@ -76,7 +85,7 @@
                                             <input name='book_date' value={{ $date }} type="hidden" />
                                             <input name='futsal_id' value={{ $futsal->id }} type="hidden" />
                                             <input name='booker_id' value={{ Auth::user()->id }} type="hidden" />
-                                            <input name='book_time' value={{ $time->book_time }} type="hidden" />
+                                            <input name='time_id' id="time" type="hidden" />
                                             <input name='isBooked' value={{ 1 }} type="hidden" />
                                             <button class="btn btn-primary">Confirm</button>
                                         </form>
@@ -102,7 +111,7 @@
                             <input name='isBooked' value={{1}} type="hidden" /> --}}
                                 {{-- <input name='startTime' value="{{$i}}:00" type="hidden" />
                             <input name='endTime' value="{{$i+1}}:00" type="hidden" /> --}}
-                                <button class="btn" style="width: 100%"  data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                <button onclick="cancelId({{$booked->id}})" class="btn" style="width: 100%"  data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                     <div class="card" style="color:white;background:red">
                                         <div class="card-body text-center">
                                             <h5 class="card-title">{{ $booked->book_time }}</h5>
@@ -114,7 +123,7 @@
                                     <div class="modal-dialog">
                                       <div class="modal-content">
                                         <div class="modal-header">
-                                          <h5 class="modal-title" id="cancelLabel">Confirm Booking?</h5>
+                                          <h5 class="modal-title" id="cancelLabel">Confirm Cancel?</h5>
                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
 
@@ -132,8 +141,9 @@
                                                 <input name='time' value={{ $time->time }} type="hidden" />
                                                 <button class="btn btn-primary">Confirm</button>
                                             </form> --}}
-                                            <form method='post' action="/cancel-booking/{{$booked->id}}">
+                                            <form method='post' action="/cancel-booking">
                                                 @csrf
+                                                <input type="hidden" name="booking_id" id="cancel-id" />
                                                 <button class="btn btn-danger">Confirm</button>
                                             </form>
 

@@ -18,10 +18,11 @@ body {
     font-family: Poppins;
 }
         .auth__container{
-            height: 100vh;
+            height: auto;
             display: flex;
             justify-content: center;
             margin-top: 50px;
+            margin-bottom: 50px;
         }
         .auth__section{
             padding: 20px;

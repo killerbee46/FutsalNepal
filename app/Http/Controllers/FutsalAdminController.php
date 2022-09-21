@@ -35,8 +35,9 @@ class FutsalAdminController extends Controller
         $date = Carbon::now()->format('Y-m-d');
         // $today->setTimezone('Asia/Kathmandu');
         $time = DB::select('SELECT * FROM times WHERE book_time NOT IN ( SELECT book_time from booking where isBooked = 1 AND book_date = ? AND futsal_id = ? )',[$date,$futsal->id]);
-        $booked_time = DB::select('SELECT * FROM times WHERE book_time IN ( SELECT book_time from booking where isBooked = 1 AND book_date = ? AND futsal_id = ? )',[$date,$futsal->id]);
-        return view('futsal-admin.booking_today',compact('futsal','time', 'date','booked_time','users'));
+
+        $bookings = DB::select('SELECT * FROM booking where isBooked = 1 AND book_date = ? AND futsal_id = ?',[$date,$futsal->id]);
+        return view('futsal-admin.booking_today',compact('futsal','time', 'date','bookings','users'));
     }
     public function bookingTomorrow()
     {
@@ -45,7 +46,7 @@ class FutsalAdminController extends Controller
         $date = Carbon::now()->format('Y-m-d');
         // $today->setTimezone('Asia/Kathmandu');
         $time = DB::select('SELECT * FROM times WHERE book_time NOT IN ( SELECT book_time from booking where isBooked = 1 AND book_date = ? AND futsal_id = ? )',[$date,$futsal->id]);
-        $booked_time = DB::select('SELECT * FROM times WHERE book_time IN ( SELECT book_time from booking where isBooked = 1 AND book_date = ? AND futsal_id = ? )',[$date,$futsal->id]);
+        $booked_time = DB::select('SELECT * FROM booking where isBooked = 1 AND book_date = ? AND futsal_id = ?',[$date,$futsal->id]);
         return view('futsal-admin.booking_tomorrow',compact('futsal','time', 'date','booked_time','users'));
     }
     public function bookingAfter()
@@ -55,44 +56,67 @@ class FutsalAdminController extends Controller
         $date = Carbon::now()->format('Y-m-d');
         // $today->setTimezone('Asia/Kathmandu');
         $time = DB::select('SELECT * FROM times WHERE book_time NOT IN ( SELECT book_time from booking where isBooked = 1 AND book_date = ? AND futsal_id = ? )',[$date,$futsal->id]);
-        $booked_time = DB::select('SELECT * FROM times WHERE book_time IN ( SELECT book_time from booking where isBooked = 1 AND book_date = ? AND futsal_id = ? )',[$date,$futsal->id]);
+        $booked_time = DB::select('SELECT * FROM booking where isBooked = 1 AND book_date = ? AND futsal_id = ?',[$date,$futsal->id]);
         return view('futsal-admin.booking_after',compact('futsal','time', 'date','booked_time','users'));
     }
 
     public function futsalBooking(Request $request){
+
         $request->validate([
             'book_date' => 'required',
             'futsal_id' => 'required',
-            'book_time'=> 'required',
-            'isBooked' => 'required'
+            'time_id'=> 'required',
+            'isBooked' => 'required',
+            'booker_id'=>'required'
         ]);
+
+
+        $time = Time::where('id',$request->time_id)->first();
+        $futsal = Futsal::where('owner_id', Auth::user()->id)->first();
         $booking = new Booking();
-        $booking->futsal_id = $request->futsal_id;
-        $booking->booker_id = Auth::user()->id;
+        $booking->futsal_id = $futsal->id;
+        $booking->booker_id = $request->booker_id;
+        $booking->price = $futsal->price;
         $booking->book_date = $request->book_date;
-        $booking->book_time = $request->book_time;
+        $booking->book_time = $time->book_time;
+        $booking->medium = 'call';
         $booking->isbooked = 1;
         $booking->save();
 
         if($booking->save()){
             //Redirect with Flash message
-            return redirect("/my-bookings")->with('status', 'Futsal booked Successfully!');
+            return redirect("/futsal-admin/bookings/all")->with('status', 'Futsal booked Successfully!');
         }
         else{
-            return redirect("/futsals/$request->futsal_id/book-today")->with('status', 'Could not book futsal at the moment!');
+            return with('status', 'Could not book futsal at the moment!');
         }
     }
 
-    public function cancelBooking(Request $request){
-        $booking = new Booking();
-        $booking->penalty = 30;
+    public function cancelBooking(Request $request,$id){
+        dd($id);
+        $futsal = Futsal::where('owner_id',auth()->user()->id)->first();
+        $booking = Booking::where('futsal_id',$futsal->id)->findOrFail($id);
+        $user = User::findOrFail($request->booker_id);
+        $penalty = (20/100)*$futsal->price;
+        $booking->penalty = $penalty;
+
         $booking->isBooked = 0;
-        if($booking->save()){
-            //Redirect with Flash message
-            return redirect("/my-bookings")->with('status', 'Booking cancelled Successfully!');
+        $booking->remarks = $request->remarks;
+        $user->penalty = $user->penalty + $penalty;
+
+        if($user->penalty >= $futsal->price) {
+            $user->status = "deactivated";
         }
         else{
-            return redirect("/futsals/$request->futsal_id/book-today")->with('status', 'Could not cancel booking at the moment!');
+            $user->status = $user->status;
+        }
+
+        if($booking->save() && $user->save()){
+            //Redirect with Flash message
+            return redirect("futsal-admin/bookings/cancelled")->with('status', 'Booking cancelled Successfully!');
+        }
+        else{
+            return with('status', 'Could not cancel booking at the moment!');
         }
     }
 
@@ -114,7 +138,7 @@ class FutsalAdminController extends Controller
             //Update
 
 
-            $futsals->owner_id = $request->owner_id || 0;
+            $futsals->owner_id = $futsals->owner_id;
             $futsals->name= $request->name;
             $futsals->email = $request->email;
             $futsals->image = $fullname;

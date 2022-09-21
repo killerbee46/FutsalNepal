@@ -211,9 +211,9 @@ class UserController extends Controller
         $users = DB::select('select * from users where penalty > ?', [0]);
         return view('admin.penalty',compact('users'));
     }
-    public function penaltyClear(Request $request,$id)
+    public function penaltyClear(Request $request)
     {
-        $user = User::findorfail($id);
+        $user = User::findorfail($request->userId);
 
         $user->penalty = $user->penalty - $request->paidAmount;
         if($user->penalty <= 0){

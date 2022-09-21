@@ -36,7 +36,7 @@ Route::group(['prefix'=>'/futsals/{id}/book-today','middleware'=>'book-futsal'],
 });
 
 Route::post('/book-futsal',[UserBookingController::class, 'futsalBooking']);
-Route::post('/cancel-booking/{id}',[UserBookingController::class, 'cancelBooking']);
+Route::post('/cancel-booking',[UserBookingController::class, 'cancelBooking']);
 
 // user booking
 Route::get('/my-bookings',[UserBookingController::class, 'userBooking']);
@@ -48,7 +48,7 @@ require __DIR__.'/auth.php';
  Route::group(['prefix'=>'admin','middleware'=>'admin'],function (){
     Route::get('/',[UserController::class, 'AdminIndex']);
     Route::get('/penalty',[UserController::class, 'penalty']);
-    Route::post('/penalty-clear/{id}',[UserController::class, 'penaltyClear']);
+    Route::post('/penalty-clear',[UserController::class, 'penaltyClear']);
 
         Route::group(['prefix'=>'users','middleware'=>'auth'],function (){
 
@@ -105,6 +105,8 @@ require __DIR__.'/auth.php';
             Route::get('/day-after',[FutsalAdminController::class, 'bookingAfter']);
             Route::get('/all',[FutsalAdminController::class, 'allBookings']);
             Route::get('/cancelled',[FutsalAdminController::class, 'cancelledBookings']);
+            Route::post('/cancel-booking/{id}',[FutsalAdminController::class, 'cancelBooking']);
+            Route::post('/bookFutsal',[FutsalAdminController::class, 'futsalBooking']);
         });
     });
     Route::get('/add-futsal',[FutsalAdminController::class, 'addFutsal']);

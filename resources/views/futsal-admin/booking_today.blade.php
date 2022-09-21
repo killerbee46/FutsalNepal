@@ -12,6 +12,14 @@ Booking - Today
     @endif
 
     <div class="container">
+        <script>
+            function modalValue(time) {
+                document.getElementById('time').value = time
+            }
+            function cancelId(id) {
+                document.getElementById('cancel-id').value = id
+            }
+        </script>
 
         <ul class="nav nav-tabs d-flex justify-content-center my-4" id="myTab" role="tablist">
             <a class="tab_link" href="/futsal-admin/bookings">
@@ -39,7 +47,7 @@ Booking - Today
                 <div class="row gy-4 my-4">
                     @foreach ($time as $time)
                         <div class="col-3">
-                            <button class="btn" style="width: 100%" data-bs-toggle="modal" data-bs-target="#confirm-modal">
+                            <button onclick="modalValue({{strval($time->id)}})" class="btn book_modal" style="width: 100%" data-bs-toggle="modal" data-bs-target="#confirm-modal">
                                 <div class="card" style="color:white;background:#2bae66ff">
                                     <div class="card-body text-center">
                                         <h5 class="card-title">{{ $time->book_time }}</h5>
@@ -47,7 +55,6 @@ Booking - Today
                                     </div>
                                 </div>
                             </button>
-
                             <div class="modal fade" id="confirm-modal" tabindex="-1" aria-labelledby="confirmLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                   <div class="modal-content">
@@ -57,20 +64,20 @@ Booking - Today
                                     </div>
 
 
-                                    <form method='post' action="/book-futsal">
+                                    <form method='post' action="/futsal-admin/bookings/bookFutsal">
                                         @csrf
                                         <div class="modal-body">
 
 
                                         <input name='book_date' value={{ $date }} type="hidden" />
                                             <input name='futsal_id' value={{ $futsal->id }} type="hidden" />
-                                            User: <select class="form-select" name="booker_id">
-                                                <option>Select a user</option>
+                                            User: <select required class="form-select" name="booker_id">
+                                                <option value="">Select a user</option>
                                                 @foreach ($users as $user)
                                                     <option value={{$user->id}}>{{$user->name}}</option>
                                                 @endforeach
                                             </select>
-                                            <input name='book_time' value={{ $time->book_time }} type="hidden" />
+                                            <input name='time_id' id="time" type="hidden" />
                                             <input name='isBooked' value={{ 1 }} type="hidden" />
                                         </div>
                                     <div class="modal-footer">
@@ -96,8 +103,8 @@ Booking - Today
                         </div>
                     @endforeach
                     <br />
-                    <h3>{{ $booked_time ? 'Booked Sessions' : '' }}</h3>
-                    @foreach ($booked_time as $time)
+                    <h3>{{ $bookings ? 'Booked Sessions' : '' }}</h3>
+                    @foreach ($bookings as $booked)
                         <div class="col-3">
 
                                 {{-- @csrf
@@ -108,10 +115,10 @@ Booking - Today
                             <input name='isBooked' value={{1}} type="hidden" /> --}}
                                 {{-- <input name='startTime' value="{{$i}}:00" type="hidden" />
                             <input name='endTime' value="{{$i+1}}:00" type="hidden" /> --}}
-                                <button class="btn" style="width: 100%"  data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                <button onclick="cancelId({{$booked->id}})" class="btn" style="width: 100%"  data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                     <div class="card" style="color:white;background:red">
                                         <div class="card-body text-center">
-                                            <h5 class="card-title">{{ $time->book_time }}</h5>
+                                            <h5 class="card-title">{{ $booked->book_time }}</h5>
                                             <p>Booked</p>
                                         </div>
                                     </div>
@@ -123,7 +130,7 @@ Booking - Today
                                           <h5 class="modal-title" id="cancelLabel">Confirm Cancel?</h5>
                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form method='post' action="/cancel-booking">
+                                        <form method='post' action="/futsal-admin/bookings/cancel-booking">
                                             @csrf
                                         <div class="modal-body">
                                           Remarks: <textarea class="form-input col-12" name='remarks' placeholder="Enter a remark..." ></textarea>
