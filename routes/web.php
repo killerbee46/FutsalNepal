@@ -30,6 +30,10 @@ Route::get('/futsals/{id}/book-tomorrow',[UserBookingController::class, 'booking
 Route::get('/futsals/{id}/book-after',[UserBookingController::class, 'booking_after']);
 Route::post('/search',[UserBookingController::class, 'searchFutsal']);
 Route::get('/user/{id}/profile',[FrontendController::class, 'profile']);
+Route::post('futsal/review/{id}',[FrontendController::class, 'comment']);
+Route::post('/deletecomment/{id}',[FrontendController::class, 'deletecomment']);
+
+
 
 Route::group(['prefix'=>'/futsals/{id}/book-today','middleware'=>'book-futsal'],function (){
     Route::get('/',[UserBookingController::class, 'booking_today']);

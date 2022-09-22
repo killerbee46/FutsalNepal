@@ -9,7 +9,9 @@ use App\Models\Futsal;
 use App\Models\Booking;
 use App\Models\User;
 use App\Models\Time;
+use App\Models\Comment;
 use Carbon\Carbon;
+use Auth;
 
 class FrontendController extends Controller
 {
@@ -73,7 +75,8 @@ class FrontendController extends Controller
     {
         $today = Carbon::now()->format('Y-m-d');
         $futsal = Futsal::where('id', $id)->first();
-        return view('frontend.futsal.futsal-detail',compact('futsal','today'));
+        $comments = Comment::where('futsal_id',$id)->with('user')->orderby('created_at', 'desc')->get();
+        return view('frontend.futsal.futsal-detail',compact('futsal','today','comments'));
     }
 
     public function profile($id)
@@ -85,6 +88,31 @@ class FrontendController extends Controller
     public function howItWorks()
     {
         return view('frontend.howItWorks');
+    }
+
+    public function comment(Request $request ,$id)
+    {
+        $comment = new Comment();
+        $comment->comment = $request->comment;
+        $comment->rating = $request->star;
+        $comment->futsal_id = $id;
+        $comment->user_id = Auth::user()->id;
+        $futsal = Futsal::where('id', $id)->first();
+        if($comment->save()){
+            $comments = Comment::where('futsal_id',$id)->with('user')->orderby('created_at', 'desc')->get();
+
+            return redirect('/futsals/'.$id);
+        }
+
+    }
+    public function deletecomment(Request $request ,$id)
+    {
+        $comment = Comment::findOrFail($id);
+        $futsal_id = $comment->futsal_id;
+        if($comment->delete()){
+            return redirect('/futsals/'.$futsal_id)->with('status', 'Comment deleted successfully');
+        }
+        else return redirect('/futsals/'.$futsal_id)->with('status', 'There was an error');
     }
 
 }

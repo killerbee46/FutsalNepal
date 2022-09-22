@@ -76,12 +76,14 @@
             max-width: 350px;
             height: 400px;
         }
-        .card__content{
+
+        .card__content {
             position: absolute;
             bottom: 10px;
             width: 100%;
             text-align: center;
         }
+
         .card-body.custom__card-body {
             background: linear-gradient(to top, rgba(0, 0, 0, 0.699) 30%, transparent 100%);
             position: absolute;
@@ -106,9 +108,11 @@
             transform: scale(1.2);
             transition: ease-in-out 1s;
         }
+
         .card.custom__card .card-img-top.card__cover {
             transition: ease-in-out 1s;
         }
+
         .btn.book__button {
             border: 2px solid transparent;
             background: #2bae66ff;
@@ -120,173 +124,193 @@
             background: #2bae66ff;
             color: black;
         }
-        .card__link{
+
+        .card__link {
             text-decoration: none;
             color: white;
         }
-        .banner-img{
+
+        .banner-img {
             width: 100%;
             height: 92vh;
         }
-        .nav-link.get-started{
+
+        .nav-link.get-started {
             background: green;
             color: white;
         }
-        .nav-link.get-started:hover{
-            background: white;
-            color: green;
-        }
-        .nav-link.get-started:focus{
+
+        .nav-link.get-started:hover {
             background: white;
             color: green;
         }
 
-        .cover-slider{
-            background:linear-gradient(to left, rgba(0, 0, 0, 0.541), transparent);
+        .nav-link.get-started:focus {
+            background: white;
+            color: green;
+        }
+
+        .cover-slider {
+            background: linear-gradient(to left, rgba(0, 0, 0, 0.541), transparent);
             position: relative;
             height: 300px;
             overflow: hidden;
         }
-        .cover-slider .banner-img{
+
+        .cover-slider .banner-img {
             margin-top: -300px;
             position: relative;
             z-index: -1;
         }
-        .cover-slider .text{
+
+        .cover-slider .text {
             position: absolute;
             top: 30px;
             right: 130px;
             text-align: right;
         }
-        .cover-slider .slider-title{
+
+        .cover-slider .slider-title {
             font-weight: 600;
             font-size: 60px;
-            color:white;
+            color: white;
         }
-        .cover-slider .slider-sub-title{
+
+        .cover-slider .slider-sub-title {
             color: white;
             font-weight: 600;
             font-size: 38px;
         }
 
         .profile-card-2 {
-    max-width: 300px;
-    height: 350px;
-    background-color: #FFF;
-    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
-    background-position: center;
-    overflow: hidden;
-    position: relative;
-    margin: 0;
-    cursor: pointer;
-    border-radius: 10px;
-}
+            max-width: 300px;
+            height: 350px;
+            background-color: #FFF;
+            box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
+            background-position: center;
+            overflow: hidden;
+            position: relative;
+            margin: 0;
+            cursor: pointer;
+            border-radius: 10px;
+        }
 
-.profile-card-2.col-3{
-    margin: 20px 10px;
-    padding: 0;
-}
-.profile-card-2 img {
-    transition: all linear 0.25s;
-    height: 100%;
-    margin: 0;
-}
+        .profile-card-2.col-3 {
+            margin: 20px 10px;
+            padding: 0;
+        }
 
-.profile-card-2 .profile-name {
-    position: absolute;
-    left: 30px;
-    bottom: 90px;
-    font-size: 24px;
-    color: #FFF;
-    text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
-    font-weight: bold;
-    transition: all linear 0.25s;
-}
+        .profile-card-2 img {
+            transition: all linear 0.25s;
+            height: 100%;
+            margin: 0;
+        }
 
-.profile-card-2 .profile-button-1 {
-    position: absolute;
-    bottom: 30px;
-    left: 30px;
-    color: #FFF;
-    transition: all linear 0.25s;
-}
+        .profile-card-2 .profile-name {
+            position: absolute;
+            left: 30px;
+            bottom: 90px;
+            font-size: 24px;
+            color: #FFF;
+            text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+            font-weight: bold;
+            transition: all linear 0.25s;
+        }
 
-.profile-card-2 .profile-username {
-    position: absolute;
-    bottom: 80px;
-    left: 30px;
-    color: #FFF;
-    font-size: 13px;
-    transition: all linear 0.25s;
-}
+        .profile-card-2 .profile-button-1 {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            color: #FFF;
+            transition: all linear 0.25s;
+        }
 
-.profile-card-2:hover .profile-name {
-    bottom: 100px;
-}
+        .profile-card-2 .profile-username {
+            position: absolute;
+            bottom: 80px;
+            left: 30px;
+            color: #FFF;
+            font-size: 13px;
+            transition: all linear 0.25s;
+        }
 
-.profile-card-2:hover .profile-username {
-    bottom: 90px;
-}
+        .profile-card-2:hover .profile-name {
+            bottom: 100px;
+        }
 
-.profile-card-2:hover .profile-button-1 {
-    bottom: 40px;
-}
-.stats{
-    background: rgb(12, 173, 79);
-    padding: 0;
-    text-align: center;
-}
-.stats .col-4{
-    padding: 10px;
-    border: 1px solid rgba(128, 128, 128, 0.438);
-}
-.stats .title{
-    color: white;
-    font-size: 24px;
-    font-weight: 600;
-}
-.stats .number{
-    color: aliceblue;
-    margin-top: -10px;
-    font-size: 30px;
-    font-weight: 600;
-}
-.hiw-section{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.hiw-section .number{
-    font-size: 30px;
-    background: #ff3300;
-    color: wheat;
-    border-radius: 50%;
-    padding: 10px 25px;
-    width: fit-content;
-}
-.hiw-section .text{
-    font-size: 30px;
-    font-weight: 600;
-    padding: 5px 10px;
-    width: fit-content;
-}
-.map-responsive{
-    overflow:hidden;
-    padding-bottom:50%;
-    position:relative;
-    height:0;
-}
-.map-responsive iframe{
-    left:0;
-    top:0;
-    height:100%;
-    width:100%;
-    position:absolute;
-}
-.dropdown-toggle::after{
-content: none !important;
-}
+        .profile-card-2:hover .profile-username {
+            bottom: 90px;
+        }
+
+        .profile-card-2:hover .profile-button-1 {
+            bottom: 40px;
+        }
+
+        .stats {
+            background: rgb(12, 173, 79);
+            padding: 0;
+            text-align: center;
+        }
+
+        .stats .col-4 {
+            padding: 10px;
+            border: 1px solid rgba(128, 128, 128, 0.438);
+        }
+
+        .stats .title {
+            color: white;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .stats .number {
+            color: aliceblue;
+            margin-top: -10px;
+            font-size: 30px;
+            font-weight: 600;
+        }
+
+        .hiw-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hiw-section .number {
+            font-size: 30px;
+            background: #ff3300;
+            color: wheat;
+            border-radius: 50%;
+            padding: 10px 25px;
+            width: fit-content;
+        }
+
+        .hiw-section .text {
+            font-size: 30px;
+            font-weight: 600;
+            padding: 5px 10px;
+            width: fit-content;
+        }
+
+        .map-responsive {
+            overflow: hidden;
+            padding-bottom: 50%;
+            position: relative;
+            height: 0;
+        }
+
+        .map-responsive iframe {
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
+
+        .dropdown-toggle::after {
+            content: none !important;
+        }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -359,18 +383,18 @@ content: none !important;
                     <div class="nav-item dropdown custom">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false" style="position: relative;color: aliceblue;">
-                            <img src="{{asset('/images/users/'.Auth::user()->profile_pic)}}"
-                                alt="" width="32" height="32" class="rounded-circle me-2">
+                            <img src="{{ asset('/images/users/' . Auth::user()->profile_pic) }}" alt="" width="32"
+                                height="32" class="rounded-circle me-2">
                             <strong>{{ Auth::user()->name }}</strong>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
                             style="position: absolute;right: 0; left: auto;">
                             <li><a class="dropdown-item" href="/user/{{ Auth::user()->id }}/profile">Profile</a></li>
                             @if (Auth()->user()->isAdmin())
-                            <li><a class="dropdown-item" href="/admin">Admin Control</a></li>
+                                <li><a class="dropdown-item" href="/admin">Admin Control</a></li>
                             @endif
                             @if (Auth()->user()->isFutsal())
-                            <li><a class="dropdown-item" href="/futsal-admin">Futsal Admin</a></li>
+                                <li><a class="dropdown-item" href="/futsal-admin">Futsal Admin</a></li>
                             @endif
                             <li>
                                 <hr class="dropdown-divider">
