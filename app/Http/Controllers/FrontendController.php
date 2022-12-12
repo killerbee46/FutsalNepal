@@ -10,6 +10,7 @@ use App\Models\Booking;
 use App\Models\User;
 use App\Models\Time;
 use App\Models\Comment;
+use App\Models\Notification;
 use Carbon\Carbon;
 use Auth;
 
@@ -76,7 +77,18 @@ class FrontendController extends Controller
         $today = Carbon::now()->format('Y-m-d');
         $futsal = Futsal::where('id', $id)->first();
         $comments = Comment::where('futsal_id',$id)->with('user')->orderby('created_at', 'desc')->get();
-        return view('frontend.futsal.futsal-detail',compact('futsal','today','comments'));
+        $total_rating = 0;
+        foreach ($comments as $comment) {
+            // $int
+            $total_rating = $total_rating + (int)$comment->rating;
+        }
+        $avg_rat = $total_rating / count($comments);
+        $avg_rating = sprintf("%.2f", $avg_rat);
+        $myComment = 0;
+        if (auth()->check()) {
+            $myComment = Comment::where('futsal_id',$id)->where('user_id',auth()->user()->id)->count();
+        }
+        return view('frontend.futsal.futsal-detail',compact('futsal','today','comments','myComment','avg_rating'));
     }
 
     public function profile($id)
@@ -113,6 +125,24 @@ class FrontendController extends Controller
             return redirect('/futsals/'.$futsal_id)->with('status', 'Comment deleted successfully');
         }
         else return redirect('/futsals/'.$futsal_id)->with('status', 'There was an error');
+    }
+
+    public function openNotification($id)
+    {
+
+        $notification = Notification::findorfail($id);
+
+        $notification->isOpened = true;
+$notification->save();
+// dd(is_string(Carbon::create($notification->updated_at)->diffForHumans()));
+
+Notification::where('id',$id)->where('isOpened',true)->where('updated_at','<',Carbon::now()->subMinute(1))->delete();
+
+
+if ($notification->save()) {
+    return redirect('/')->with('success',"Notification opened successfully");
+}
+
     }
 
 }

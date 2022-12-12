@@ -311,6 +311,16 @@
         .dropdown-toggle::after {
             content: none !important;
         }
+
+        .notifi.new {
+            background: rgba(0, 128, 0, 0.555);
+            color: #FFF;
+        }
+
+        .notifi.opened {
+            color: rgba(0, 128, 0, 0.555);
+            white: #FFF;
+        }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -319,6 +329,20 @@
     </script>
     <link rel="stylesheet/text" href="./styles.css " />
 </head>
+
+@php
+use App\Models\Notification;
+$notifications = [];
+$new_notifications = 0;
+if (auth()->check()) {
+    $notifications = Notification::where('user_id', auth()->user()->id)
+        ->orderBy('created_at', 'DESC')
+        ->get();
+    $new_notifications = Notification::where('user_id', auth()->user()->id)
+        ->where('isOpened', false)
+        ->count();
+}
+@endphp
 
 <body>
     <div class="go_navbar">
@@ -359,32 +383,45 @@
                     aria-label="Search">
                 <button class="btn btn__primary__outlined" type="submit">Search</button>
             </form>
-            {{-- <div>
-            <div class="nav-item dropdown custom">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false" style="border-radius:50%; padding:10px 15px; overflow:hidden;">
 
-                    <div>
-                        <img width="20" src="{{ asset('/images/notification-icon.webp') }}">
-                        <span class="position-absolute top-10 start-20 translate-middle p-1 bg-danger border border-light rounded-circle">
-                            <span class="visually-hidden">New alerts</span>
-                          </span>
-                    </div>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"
-                    style="position: absolute;right: 0; left: auto;">
-                    <li><a class="dropdown-item">You have been de-activated due to pending penalty</a></li>
-                    <li><a class="dropdown-item">Successfully Registered</a></li>
-                </ul>
-            </div>
-        </div> --}}
             @if (Route::has('login'))
+                <div>
+                    <div class="nav-item dropdown custom">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="border-radius:50%; padding:10px 15px; overflow:hidden;">
+
+                            <div>
+                                <img width="20" src="{{ asset('/images/notification-icon.webp') }}">
+                                @if ($new_notifications)
+                                    <span
+                                        class="position-absolute start-20 translate-middle bg-danger border border-light rounded-circle"
+                                        style="padding: 0px 8px">
+                                        {{ $new_notifications }}
+                                        <span class="visually-hidden">New alerts</span>
+                                    </span>
+                                @endif
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            @if (count($notifications) == 0)
+                                <li><a class="dropdown-item disabled">No Notifications</a></li>
+                            @else
+                                @foreach ($notifications as $item)
+                                    <li><a class="dropdown-item notifi {{ $item->isOpened ? 'opened' : 'new' }}"
+                                            href="/notification-open/{{ $item->id }}">{{ $item->message }}</a></li>
+                                @endforeach
+                            @endif
+
+                        </ul>
+                    </div>
+                </div>
                 @auth
                     <div class="nav-item dropdown custom">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false" style="position: relative;color: aliceblue;">
-                            <img src="{{ asset('/images/users/' . Auth::user()->profile_pic) }}" alt="" width="32"
-                                height="32" class="rounded-circle me-2">
+                            <img src="{{ asset('/images/users/' . Auth::user()->profile_pic) }}" alt=""
+                                width="32" height="32" class="rounded-circle me-2">
                             <strong>{{ Auth::user()->name }}</strong>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
@@ -404,8 +441,8 @@
                     </div>
                 @else
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle btn btn-default get-started" href="#" id="navbarDropdown"
-                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle btn btn-default get-started" href="#"
+                            id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Get Started
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">

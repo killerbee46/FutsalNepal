@@ -31,7 +31,7 @@ Route::get('/futsals/{id}/book-after',[UserBookingController::class, 'booking_af
 Route::post('/search',[UserBookingController::class, 'searchFutsal']);
 Route::get('/user/{id}/profile',[FrontendController::class, 'profile']);
 Route::post('futsal/review/{id}',[FrontendController::class, 'comment']);
-Route::post('/deletecomment/{id}',[FrontendController::class, 'deletecomment']);
+Route::get('/deletecomment/{id}',[FrontendController::class, 'deletecomment']);
 
 
 
@@ -115,3 +115,5 @@ require __DIR__.'/auth.php';
     });
     Route::get('/add-futsal',[FutsalAdminController::class, 'addFutsal']);
     Route::post('/futsal/create-futsal',[FutsalAdminController::class, 'createFutsal']);
+
+    Route::get('/notification-open/{id}',[FrontendController::class, 'openNotification']);

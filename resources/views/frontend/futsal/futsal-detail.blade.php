@@ -6,6 +6,7 @@
 
 @section('content')
     @php
+        use App\Models\User;
         use Carbon\Carbon;
         $user = auth()->user();
     @endphp
@@ -53,6 +54,17 @@
                 content: '\f006';
                 font-family: FontAwesome;
             }
+
+            .meta-detail {
+                display: flex;
+                width: 60%;
+                justify-content: space-between
+            }
+
+            .futsal-detail-link {
+                text-decoration: none;
+                color: #444;
+            }
         </style>
     </head>
     <div class="container">
@@ -66,6 +78,24 @@
                 <p>{{ $futsal->area }}, {{ $futsal->city }}</p>
                 <a href="callto:{{ $futsal->contact }}">{{ $futsal->contact }}</a><br />
                 <a href="mailto:{{ $futsal->email }}">{{ $futsal->email }}</a>
+
+                <div style="padding: 10px" class="meta-detail">
+                    <div>
+                        <a href="#comment" class="futsal-detail-link">
+                            <img src={{ asset('images/comment-icon.webp') }} width="20px">
+                            {{ count($comments) }}
+                        </a>
+                    </div>
+                    <div class="avg-rating">
+                        Avg Rating: {{ $avg_rating }} / 5
+                    </div>
+                    <div>
+                        <a href="#map-section" class="futsal-detail-link">
+                            <img src={{ asset('images/map-icon.webp') }} width="20px">
+                            Map
+                        </a>
+                    </div>
+                </div>
                 <hr />
                 <p>
                     We try to provide quality services to our customers try it out by booking our futsal and getting the
@@ -75,7 +105,8 @@
 
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" id="map-section">
+            <h3 class="card-title" style="color: rgb(43, 174, 102); text-align: center; margin:20px">Location</h3>
             <div class="map-responsive">
                 <iframe
                     src={{ "https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&q=$futsal->map" }}
@@ -83,7 +114,9 @@
             </div>
         </div>
         @auth
-            <div class="card" style="padding: 20px; margin: 20px 0">
+            <div class="card" style="padding: 20px; margin: 20px 0" <?php if ($myComment > 0) {
+                echo 'hidden';
+            } ?>>
 
                 <form method="POST" action="{{ url('futsal/review/' . $futsal->id) }}">
                     @csrf
@@ -91,73 +124,98 @@
                         <label for="exampleInputPassword1" style="font-size: 18px;font-weight: 500">Review</label>
                         <div>Rate:</div>
                         <div class="stars">
-                            <input class="star star-5" id="star-5" type="radio" name="star" value=1 />
+                            <input class="star star-5" id="star-5" type="radio" name="star" value=5 />
                             <label class="star star-5" for="star-5"></label>
-                            <input class="star star-4" id="star-4" type="radio" name="star" value=2 />
+                            <input class="star star-4" id="star-4" type="radio" name="star" value=4 />
                             <label class="star star-4" for="star-4"></label>
                             <input class="star star-3" id="star-3" type="radio" name="star" value=3 />
                             <label class="star star-3" for="star-3"></label>
-                            <input class="star star-2" id="star-2" type="radio" name="star" value=4 />
+                            <input class="star star-2" id="star-2" type="radio" name="star" value=2 />
                             <label class="star star-2" for="star-2"></label>
-                            <input class="star star-1" id="star-1" type="radio" name="star" value=5 />
+                            <input class="star star-1" id="star-1" type="radio" name="star" value=1 />
                             <label class="star star-1" for="star-1"></label>
                         </div>
-                        <textarea type="text" class="form-control" placeholder="Type review here..." name="comment" required="true""></textarea>
+                        <textarea type="text" class="form-control" placeholder="Type review here..." name="comment" required="true"></textarea>
                     </div>
                     <button class="btn btn-success" style="margin: 20px 0">Post Review</button>
                 </form>
             </div>
         @endauth
 
-        <div style="margin-top: 30px;">
+        <div style="margin: 30px auto" id="comment">
             <div class="col-lg-12">
                 <div class="card" style="color: rgb(43, 174, 102);">
                     <div class="card-body text-center">
                         <h4 class="card-title">Latest Reviews</h4>
                     </div>
-                    @foreach ($comments as $comment)
-                        <div class="comment-widgets">
-                            <!-- Comment Row -->
-                            <div class="d-flex flex-row comment-row m-t-0">
-                                <div class="p-2">
-                                    <img src="{{ asset('/images/users/' . $comment->user->profile_pic) }}" alt="O"
-                                        width="50" class="rounded-circle" style="border-radius: 50%;overflow: hidden;">
-                                </div>
-                                <div class="comment-text w-100">
-                                    <span class="m-b-15 d-block">{{ $comment->comment }}</span>
-                                    <div class="stars" aria-readonly="true">
-                                        <input class="star star-5" id="star-5" type="radio" name="star" value=5 />
-                                        <label class="star star-5" for="star-5"></label>
-                                        <input class="star star-4" id="star-4" type="radio" name="star" value=4 />
-                                        <label class="star star-4" for="star-4"></label>
-                                        <input class="star star-3" id="star-3" type="radio" name="star" value=3 />
-                                        <label class="star star-3" for="star-3"></label>
-                                        <input class="star star-2" id="star-2" type="radio" name="star"
-                                            value=2 />
-                                        <label class="star star-2" for="star-2"></label>
-                                        <input class="star star-1" id="star-1" type="radio" name="star"
-                                            value=1 />
-                                        <label class="star star-1" for="star-1"></label>
-                                    </div>
-                                    <div class="comment-footer"> <span
-                                            class="text-muted float-right">{{ Carbon::create($comment->created_at)->diffForHumans() }}</span>
-                                        @if ($user == null)
-                                            <div></div>
-                                        @else
-                                            @if ($comment->user_id == $user->id)
-                                                <a href="{{ url('/deletecomment/' . $comment->id) }}"
-                                                    class="btn btn-default"
-                                                    style="float: right;align-content: center"><button type="button"
-                                                        class="btn btn-danger">Delete</button></a>
-                                            @endif
-                                        @endif
-                                    </div>
-                                </div>
-                            </div> <!-- Comment Row -->
+                    @if (count($comments) !== 0)
+                        @foreach ($comments as $comment)
+                            @php
 
-                        </div> <!-- Card -->
-                        <br>
-                    @endforeach()
+                                $commentUser = User::where('id', $comment->user_id)->first();
+                            @endphp
+                            <div class="comment-widgets">
+                                <!-- Comment Row -->
+                                <div class="d-flex flex-row comment-row m-t-0">
+                                    <div class="p-2">
+                                        <img src="{{ asset('/images/users/' . $comment->user->profile_pic) }}"
+                                            alt="O" width="50" class="rounded-circle"
+                                            style="border-radius: 50%;overflow: hidden;">
+                                    </div>
+                                    <div class="comment-text w-100">
+                                        <h4>{{ $commentUser->name }}</h4>
+                                        <span class="m-b-15 d-block">{{ $comment->comment }}</span>
+                                        <div class="stars" aria-readonly="true">
+                                            <input class="star star-5" id="star-5" type="radio" name="star" value=5
+                                                <?php if ($comment->rating == 5) {
+                                                    echo 'checked';
+                                                } ?> />
+                                            <label class="star star-5" for="star-5"></label>
+                                            <input class="star star-4" id="star-4" type="radio" name="star"
+                                                value=4 <?php if ($comment->rating == 4) {
+                                                    echo 'checked';
+                                                } ?> />
+                                            <label class="star star-4" for="star-4"></label>
+                                            <input class="star star-3" id="star-3" type="radio" name="star"
+                                                value=3 <?php if ($comment->rating == 3) {
+                                                    echo 'checked';
+                                                } ?> />
+                                            <label class="star star-3" for="star-3"></label>
+                                            <input class="star star-2" id="star-2" type="radio" name="star"
+                                                value=2 <?php if ($comment->rating == 2) {
+                                                    echo 'checked';
+                                                } ?> />
+                                            <label class="star star-2" for="star-2"></label>
+                                            <input class="star star-1" id="star-1" type="radio" name="star"
+                                                value=1 <?php if ($comment->rating == 1) {
+                                                    echo 'checked';
+                                                } ?> />
+                                            <label class="star star-1" for="star-1"></label>
+                                        </div>
+                                        <div class="comment-footer"> <span
+                                                class="text-muted">{{ Carbon::create($comment->created_at)->diffForHumans() }}</span>
+                                            @if ($user == null)
+                                                <div></div>
+                                            @else
+                                                @if ($comment->user_id == $user->id)
+                                                    <a href="{{ url('/deletecomment/' . $comment->id) }}"
+                                                        class="btn btn-default" style="align-content: center"><button
+                                                            type="button" class="btn btn-danger">Delete</button></a>
+                                                @endif
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div> <!-- Comment Row -->
+
+                            </div> <!-- Card -->
+                            <br>
+                        @endforeach
+                    @else
+                        <div class="text text-danger" style="font-size: 18px; text-align:center; padding:30px">
+                            <img src={{ asset('images/no-data.webp') }} width="200px">
+                            <p style="padding: 10px">No Reviews Yet!</p>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

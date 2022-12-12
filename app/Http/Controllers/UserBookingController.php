@@ -7,6 +7,7 @@ use App\Models\Futsal;
 use App\Models\Booking;
 use App\Models\User;
 use App\Models\Time;
+use App\Models\Notification;
 use Carbon\Carbon;
 use Auth;
 
@@ -56,6 +57,7 @@ else{
 
     public function futsalBooking(Request $request){
         $time = Time::where('id',$request->time_id)->first();
+        $notification = new Notification();
         $request->validate([
             'book_date' => 'required',
             'futsal_id' => 'required',
@@ -74,6 +76,9 @@ else{
 
         if($booking->save()){
             //Redirect with Flash message
+            $notification->message = "Futsal has been booked successfully";
+            $notification->user_id = auth()->user()->id;
+            $notification->save();
             return redirect("/my-bookings")->with('status', 'Futsal booked Successfully!');
         }
         else{

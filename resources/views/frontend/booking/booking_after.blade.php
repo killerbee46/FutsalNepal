@@ -17,12 +17,13 @@
             function modalValue(time) {
                 document.getElementById('time').value = time
             }
+
             function cancelId(id) {
                 document.getElementById('cancel-id').value = id
             }
         </script>
 
-        <h3><a href="/futsals/{{ $futsal->id }}" style="text-decoration: none;color:#2bae66ff;">{{$futsal->name}}</a></h3>
+        <h3><a href="/futsals/{{ $futsal->id }}" style="text-decoration: none;color:#2bae66ff;">{{ $futsal->name }}</a></h3>
 
         <ul class="nav nav-tabs d-flex justify-content-center my-4" id="myTab" role="tablist">
             <a class="tab_link" href="/futsals/{{ $futsal->id }}/book-today">
@@ -33,9 +34,8 @@
             </a>
             <a class="tab_link" href="/futsals/{{ $futsal->id }}/book-tomorrow">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link custom__tab" id="tomorrow-tab" data-bs-toggle="tab"
-                        data-bs-target="#tomorrow" type="button" role="tab" aria-controls="tomorrow"
-                        aria-selected="false">Tomorrow</button>
+                    <button class="nav-link custom__tab" id="tomorrow-tab" data-bs-toggle="tab" data-bs-target="#tomorrow"
+                        type="button" role="tab" aria-controls="tomorrow" aria-selected="false">Tomorrow</button>
                 </li>
             </a>
             <a class="tab_link" href="/futsals/{{ $futsal->id }}/book-after">
@@ -50,7 +50,8 @@
                 <div class="row gy-4 my-4">
                     @foreach ($time as $time)
                         <div class="col-3">
-                            <button class="btn" onclick="modalValue({{strval($time->id)}})" style="width: 100%" data-bs-toggle="modal" data-bs-target="#confirm-modal">
+                            <button class="btn" onclick="modalValue({{ strval($time->id) }})" style="width: 100%"
+                                data-bs-toggle="modal" data-bs-target="#confirm-modal">
                                 <div class="card" style="color:white;background:#2bae66ff">
                                     <div class="card-body text-center">
                                         <h5 class="card-title">{{ $time->book_time }}</h5>
@@ -59,20 +60,23 @@
                                 </div>
                             </button>
 
-                            <div class="modal fade" id="confirm-modal" tabindex="-1" aria-labelledby="confirmLabel" aria-hidden="true">
+                            <div class="modal fade" id="confirm-modal" tabindex="-1" aria-labelledby="confirmLabel"
+                                aria-hidden="true">
                                 <div class="modal-dialog">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title" id="confirmLabel">Confirm Booking?</h5>
-                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="confirmLabel">Confirm Booking?</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
 
-                                    <div class="modal-body">
-                                      Charges may apply in case of cancellation.
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" onsubmit="" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        {{-- <form method='post' action="/book-futsal">
+                                        <div class="modal-body">
+                                            Charges may apply in case of cancellation.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" onsubmit="" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Cancel</button>
+                                            {{-- <form method='post' action="/book-futsal">
                                             @csrf
                                             <input name='date' value={{ $date }} type="hidden" />
                                             <input name='futsal_id' value={{ $futsal->id }} type="hidden" />
@@ -80,20 +84,22 @@
                                             <input name='time' value={{ $time->time }} type="hidden" />
                                             <button class="btn btn-primary">Confirm</button>
                                         </form> --}}
-                                        <form method='post' action="/book-futsal">
-                                            @csrf
-                                            <input name='book_date' value={{ $date }} type="hidden" />
-                                            <input name='futsal_id' value={{ $futsal->id }} type="hidden" />
-                                            <input name='booker_id' value={{ Auth::user()->id }} type="hidden" />
-                                            <input name='time_id' id="time" type="hidden" />
-                                            <input name='isBooked' value={{ 1 }} type="hidden" />
-                                            <button class="btn btn-primary">Confirm</button>
-                                        </form>
+                                            <form method='post' action="/book-futsal">
+                                                @csrf
+                                                <input name='book_date' value={{ $date }} type="hidden" />
+                                                <input name='futsal_id' value={{ $futsal->id }} type="hidden" />
+                                                <input name='booker_id' value={{ Auth::user()->id }} type="hidden" />
+                                                <input name='time_id' id="time" type="hidden" />
+                                                <input name='isBooked' value={{ 1 }} type="hidden" />
+                                                <button class="btn btn-primary <?php if ($booking_count === 3) {
+                                                    echo 'disabled';
+                                                } ?>">Confirm</button>
+                                            </form>
 
+                                        </div>
                                     </div>
-                                  </div>
                                 </div>
-                              </div>
+                            </div>
                         </div>
                     @endforeach
                     <br />
@@ -103,36 +109,40 @@
                     @foreach ($my_booking as $booked)
                         <div class="col-3">
 
-                                {{-- @csrf
+                            {{-- @csrf
                             <input name='date' value={{$today}} type="hidden" />
                             <input name='futsal_id' value={{$futsal->id}} type="hidden" />
                             <input name='booker_id' value={{Auth::user()->id}} type="hidden" />
                             <input name='time' value={{$time->time}} type="hidden" />
                             <input name='isBooked' value={{1}} type="hidden" /> --}}
-                                {{-- <input name='startTime' value="{{$i}}:00" type="hidden" />
+                            {{-- <input name='startTime' value="{{$i}}:00" type="hidden" />
                             <input name='endTime' value="{{$i+1}}:00" type="hidden" /> --}}
-                                <button onclick="cancelId({{$booked->id}})" class="btn" style="width: 100%"  data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                    <div class="card" style="color:white;background:red">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title">{{ $booked->book_time }}</h5>
-                                            <p>Booked</p>
-                                        </div>
+                            <button onclick="cancelId({{ $booked->id }})" class="btn" style="width: 100%"
+                                data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                <div class="card" style="color:white;background:red">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">{{ $booked->book_time }}</h5>
+                                        <p>Booked</p>
                                     </div>
-                                </button>
-                                <div class="modal fade" id="cancel-modal" tabindex="-1" aria-labelledby="cancelLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                      <div class="modal-content">
+                                </div>
+                            </button>
+                            <div class="modal fade" id="cancel-modal" tabindex="-1" aria-labelledby="cancelLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
                                         <div class="modal-header">
-                                          <h5 class="modal-title" id="cancelLabel">Confirm Cancel?</h5>
-                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <h5 class="modal-title" id="cancelLabel">Confirm Cancel?</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
                                         </div>
 
                                         <div class="modal-body">
-                                          Are you sure you want to cancel booking?
-                                          {{-- {{$message}} --}}
+                                            Are you sure you want to cancel booking?
+                                            {{-- {{$message}} --}}
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" onsubmit="" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="button" onsubmit="" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Cancel</button>
                                             {{-- <form method='post' action="/book-futsal">
                                                 @csrf
                                                 <input name='date' value={{ $date }} type="hidden" />
@@ -148,9 +158,9 @@
                                             </form>
 
                                         </div>
-                                      </div>
                                     </div>
-                                  </div>
+                                </div>
+                            </div>
                             </form>
                         </div>
                     @endforeach
