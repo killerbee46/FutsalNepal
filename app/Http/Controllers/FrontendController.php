@@ -64,7 +64,33 @@ class FrontendController extends Controller
             $recommender = [];
         }
 
-       return view('frontend.index',compact('futsal','today','userCount','futsalCount','bookingCount','recommender'));
+        function getNearestFutsals()
+{
+    // Step 1: Get current user location
+    $user = Auth::user();
+
+    $userLat = $user->latitude ?? 27.716354462748537;
+    $userLng = $user->longitude ?? 85.34843793206647;
+
+    // Step 2: Use Haversine SQL to calculate distance
+    $closestFutsal = DB::table('futsal')
+        ->select('*', DB::raw("(
+            6371 * acos(
+                cos(radians($userLat)) *
+                cos(radians(latitude)) *
+                cos(radians(longitude) - radians($userLng)) +
+                sin(radians($userLat)) *
+                sin(radians(latitude))
+            )
+        ) AS distance"))
+        ->orderBy('distance','desc')
+        ->limit(5) // Top 5 closest
+        ->get();
+        return $closestFutsal;
+}
+$closeFutsal = getNearestFutsals();
+
+       return view('frontend.index',compact('futsal','today','userCount','futsalCount','bookingCount','recommender','closeFutsal'));
     }
     public function futsals()
     {
@@ -82,7 +108,7 @@ class FrontendController extends Controller
             // $int
             $total_rating = $total_rating + (int)$comment->rating;
         }
-        $avg_rat = $total_rating / count($comments);
+        $avg_rat = count($comments) >0 ? $total_rating / count($comments) : $total_rating;
         $avg_rating = sprintf("%.2f", $avg_rat);
         $myComment = 0;
         if (auth()->check()) {
@@ -144,5 +170,35 @@ if ($notification->save()) {
 }
 
     }
+
+    public function getNearestFutsals()
+{
+    // Step 1: Get current user location
+    $user = Auth::user();
+
+    if (!$user->latitude || !$user->longitude) {
+        return response()->json(['error' => 'User location not set.'], 400);
+    }
+
+    $userLat = $user->latitude;
+    $userLng = $user->longitude;
+
+    // Step 2: Use Haversine SQL to calculate distance
+    $futsals = DB::table('futsals')
+        ->select('*', DB::raw("(
+            6371 * acos(
+                cos(radians($userLat)) *
+                cos(radians(latitude)) *
+                cos(radians(longitude) - radians($userLng)) +
+                sin(radians($userLat)) *
+                sin(radians(latitude))
+            )
+        ) AS distance"))
+        ->orderBy('distance')
+        ->limit(5) // Top 5 closest
+        ->get();
+
+    return response()->json($futsals);
+}
 
 }

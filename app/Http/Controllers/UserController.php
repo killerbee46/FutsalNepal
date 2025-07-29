@@ -97,6 +97,8 @@ class UserController extends Controller
             $user->mobile = $request->mobile;
             $user->role = $request->role;
             $user->profile_pic = $fullname;
+            $user->longitude = $request->longitude;
+            $user->latitude = $request->latitude;
 
             $user->password = Hash::make(12345678);
 
@@ -152,6 +154,8 @@ class UserController extends Controller
         $user->status = $request->status;
         $user->profile_pic = $fullname;
         $user->status = $users->status;
+        $user->longitude = $request->longitude;
+        $user->latitude = $request->latitude;
 
         if ($user->save()) {
 

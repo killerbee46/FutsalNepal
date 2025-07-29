@@ -162,6 +162,8 @@ class FutsalController extends Controller
         $futsals->city = $request->city;
         $futsals->area = $request->area;
         $futsals->map = $request->map;
+        $futsals->longitude = $request->longitude;
+        $futsals->latitude = $request->latitude;
 
         if($futsals->save()){
             return redirect('/admin/futsal')->with('status', 'Futsal updated Successfully!');

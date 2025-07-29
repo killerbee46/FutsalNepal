@@ -42,7 +42,6 @@ class RegisteredUserController extends Controller
             'lang'=>'',
 
         ]);
-        dd($request);
         if ($file = $request->hasFile('profile_pic')) {
 
             $request->validate([

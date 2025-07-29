@@ -109,7 +109,7 @@
             <h3 class="card-title" style="color: rgb(43, 174, 102); text-align: center; margin:20px">Location</h3>
             <div class="map-responsive">
                 <iframe
-                    src={{ "https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&q=$futsal->map" }}
+                    src={{ "https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&q=$futsal->latitude,$futsal->longitude" }}
                     width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
             </div>
         </div>
