@@ -14,8 +14,8 @@ class AddLatLongUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->decimal('longitude')->nullable();
-            $table->decimal('latitude')->nullable();
+            $table->string('longitude')->nullable();
+            $table->string('latitude')->nullable();
         });
     }
 

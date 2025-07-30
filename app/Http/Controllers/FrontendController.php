@@ -67,10 +67,10 @@ class FrontendController extends Controller
         function getNearestFutsals()
 {
     // Step 1: Get current user location
-    $user = Auth::user();
+    $user = auth()->user();
 
-    $userLat = $user->latitude ?? 27.716354462748537;
-    $userLng = $user->longitude ?? 85.34843793206647;
+    $userLat = $user ? floatval($user->latitude) : 27.716354462748537;
+    $userLng = $user ? floatval($user->longitude) : 85.34843793206647;
 
     // Step 2: Use Haversine SQL to calculate distance
     $closestFutsal = DB::table('futsal')
@@ -83,7 +83,7 @@ class FrontendController extends Controller
                 sin(radians(latitude))
             )
         ) AS distance"))
-        ->orderBy('distance','desc')
+        ->orderBy('distance')
         ->limit(5) // Top 5 closest
         ->get();
         return $closestFutsal;

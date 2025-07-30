@@ -93,7 +93,7 @@
 
      @if (count($closeFutsal) !== 0)
         <div class="container py-5">
-            <h3 class="py-2">Closest Futsals to you</h3>
+            <h3 class="py-2">Futsals closest to you</h3>
             <div class="row  py-5 justify-content-evenly">
                 @foreach ($closeFutsal as $data)
                     <div class="profile-card-2 col-3"><img src="{{ asset('/images/futsals/' . $data->image) }}"
